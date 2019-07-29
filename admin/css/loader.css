@@ -1,0 +1,148 @@
+/*LEAF ICON*/
+.leaf-icon {
+    color: RGB(54, 181, 75) !important;
+    margin-right: -20px;
+    margin-left: 30px;
+    font-size: 30px !important;
+}
+/*TR BACKGROUND*/
+.tr-background>tbody>tr:hover {
+    background-color: RGB(216, 253, 216) !important; 
+}
+/*INPUTS BACKGROUND*/
+.input-background:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border-color: RGB(54, 181, 75) !important; 
+}
+.input-background:active {
+    border-color: RGB(54, 181, 75) !important; 
+}
+.input-background:hover {
+    box-shadow: none;
+    background-color: RGB(216, 253, 216) !important; 
+    border-color: RGB(54, 181, 75) !important; 
+     outline: none !important;
+}
+
+/*
+CHECKBOX
+.checkbox-color input[type=checkbox] {
+    color: red !important;
+    background-color: red !important;
+}
+.checkbox-color[type=checkbox] {
+    color: red !important;
+    background-color: red !important;
+}
+*/
+
+/*NAVBAR*/
+.navbar-title, .navbar-subtitles:hover, .navbar-subtitles>li>a:hover, .navbar-subtitles b:hover {
+    background: linear-gradient(TO RIGHT, RGB(54, 181, 75), RGB(244, 255, 248))!important;
+   -webkit-background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+    transition: 0.5s;
+}
+
+.navbar-vertical>li>a:hover, .navbar-vertical>li>i:hover{
+    color: RGB(54, 181, 75) !important;
+}
+
+/*LINKS COLOR*/
+.links-color a{
+    text-decoration: none !important;
+    color: RGB(158, 225, 161) !important;
+}
+.links-color a:hover{
+    text-decoration: none !important;
+    color: RGB(54, 181, 75) !important;
+}
+/*BORDERS MODAL */
+.modal-content-border {
+    border: 1px solid RGB(54, 181, 75) !important;
+}
+.modal-header-border {
+    border-bottom: 1px solid RGB(216, 253, 216) !important;
+}
+.modal-footer-border {
+    border-top: 1px solid RGB(216, 253, 216) !important;
+}
+/*DELETE BUTTON MODAL*/
+.modal_delete_link {
+    transition: 0.4s !important;
+}
+.modal_delete_link:hover {
+    transform: scale(1.06) !important;
+}
+/*CLOSE BUTTON*/
+.close-x-button {
+    opacity: 1 !important;
+    color: RGB(54, 181, 75) !important;
+    transition: 0.3s !important;
+}
+.close-x-button:hover {
+    opacity: 1 !important;
+    color: RGB(54, 181, 75) !important;
+    transform: scale(1.2) !important;
+    text-shadow: 0 0 3px RGB(54, 181, 75) !important;
+}
+/*CANCEL BUTTONS*/
+.cancel-button {
+    color: black !important;
+    transition: 0.4s !important;
+}
+
+.cancel-button:hover {
+    color: black !important;
+    transform: scale(1.06) !important;
+    border-color: RGB(54, 181, 75) !important; 
+    background-color: RGB(216, 253, 216) !important; 
+}
+.cancel-button:focus {
+    box-shadow: none !important;
+    border-color: RGB(54, 181, 75) !important; 
+}
+.cancel-button:active {
+    border-color: RGB(54, 181, 75) !important; 
+}
+/*SUBMIT BUTTONS*/
+.submit-buttons {
+    background-color: RGB(54, 181, 75) !important;
+    opacity: 0.6 !important;
+    transition: 0.5s;
+    border-color: none !immportant;
+}
+
+.submit-buttons:hover {
+    opacity: 1 !important;
+}
+
+.submit-buttons:focus {
+    box-shadow: none !important;
+    border-color: RGB(54, 181, 75) !important; 
+}
+.submit-buttons:active {
+    border-color: RGB(54, 181, 75) !important; 
+}
+
+/*LOADER-GIF*/
+#load-screen {
+background: url(../../images/header-back.png);
+position: fixed;
+z-index: 10000;
+top:0px;
+width: 100%;
+height: 1600px;
+}
+
+
+#loading {
+width: 450px;
+height: 450px;
+margin: 10% auto;
+background: url(../../images/leafloader.gif);
+background-size: 80%;
+background-repeat: no-repeat;
+background-position: center;
+}

@@ -1,0 +1,191 @@
+/*NAVBAR*/
+.navbar-title, .navbar-subtitles:hover {
+    background: linear-gradient(TO RIGHT, RGB(54, 181, 75), RGB(244, 255, 248))!important;
+   -webkit-background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+    transition: 0.5s;
+}
+
+.navbar-subtitles:hover {
+    transform: scale(1.2);
+}
+/*TITLE*/
+
+.post-title {
+    color: black !important;
+    text-decoration: none !important;
+}
+.post-title:hover {
+    color: RGB(54, 181, 75) !important;
+    text-decoration: none !important;
+}
+
+.post-title-selected {
+    color: RGB(54, 181, 75) !important;
+}
+
+/*LEAF ICON*/
+.leaf-icon {
+    color: RGB(54, 181, 75) !important;
+    font-size: 30px !important;
+}
+
+/*TIME ICON*/
+.time-icon {
+    color: RGB(54, 181, 75) !important;
+}
+/*INPUTS BACKGROUND*/
+.input-background:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border-color: RGB(54, 181, 75) !important; 
+}
+.input-background:active {
+    border-color: RGB(54, 181, 75) !important; 
+}
+.input-background:hover {
+    box-shadow: none;
+    background-color: RGB(216, 253, 216) !important; 
+    border-color: RGB(54, 181, 75) !important; 
+     outline: none !important;
+}
+/*PAGINATION*/
+
+.pager li .inactive_link {
+    color: black !important;
+    transition: 0.4s;
+}
+
+.pager li .inactive_link:hover {
+    color: black !important;
+    transform: scale(1.06);
+    border-color: RGB(54, 181, 75) !important; 
+    background-color: RGB(216, 253, 216) !important; 
+}
+
+.pager li .active_link {
+    background-color: RGB(54, 181, 75) !important;
+    color: black !important;
+    transition: 0.4s;
+    opacity: 0.6 !important;
+}
+
+.pager li .active_link:hover {
+    transform: scale(1.06);
+    background-color: RGB(54, 181, 75) !important;
+    border-color: RGB(54, 181, 75) !important; 
+    opacity: 1 !important;
+}
+
+/*SEARCH BUTTON*/
+
+.search-button {
+    background-color: RGB(54, 181, 75) !important;
+    color: black !important;
+    border-color: RGB(54, 181, 75) !important; 
+    transition: 0.4s;
+    opacity: 0.6 !important;
+}
+
+.search-button:hover {
+    background-color: RGB(54, 181, 75) !important;
+    border-color: RGB(54, 181, 75) !important; 
+    opacity: 1 !important;
+}
+
+/*LOGIN BUTTON*/
+.login-button {
+    background-color: RGB(54, 181, 75) !important;
+    color: black !important;
+    border-color: RGB(54, 181, 75) !important; 
+    transition: 0.4s;
+    opacity: 0.6 !important;
+}
+
+.login-button:hover {
+    background-color: RGB(54, 181, 75) !important;
+    border-color: RGB(54, 181, 75) !important; 
+    opacity: 1 !important;
+}
+
+/*BLOG CATEGORIES*/
+
+.categories-list {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.categories-list:hover {
+    text-decoration: none !important;
+    color: RGB(54, 181, 75) !important;
+}
+
+/*REGISTER BUTTOM*/
+
+.register-button {
+    background-color: RGB(54, 181, 75) !important;
+    margin: 10px 20px 0 20px !important;
+    width: 100px !important;
+    margin-left: 220px !important;
+    opacity: 0.6 !important;
+    transition: 0.5s;
+}
+
+.register-button:hover {
+    opacity: 1 !important;
+    transform: scale(1.2);
+}
+/*COMMENT BUTTON*/ 
+.comment-button {
+    color: black;
+    background-color: RGB(54, 181, 75) !important;
+    opacity: 0.6 !important;
+    transition: 0.5s;    
+    border-color: RGB(54, 181, 75) !important; 
+}
+
+.comment-button:hover {
+    color: black;
+    opacity: 1 !important;
+    transform: scale(1.2);
+    border-color: RGB(54, 181, 75) !important; 
+}
+    
+/*Sidebar - Widget - Search Engine*/
+.well {
+    transition: 0.5s;
+    border: 0.5px solid RGB(54, 181, 75) !important; 
+}
+
+.well:hover {
+    transform: scale(1.06);
+    box-shadow: 3px 3px 3px 3px RGB(54, 181, 75);
+}
+
+/*READ BUTTOM*/
+.read-more {
+    transition: 0.5s;
+    background-color: RGB(54, 181, 75) !important;
+    border-color: RGB(54, 181, 75) !important; 
+}
+
+.read-more:hover {
+    transform: scale(1.06);
+    background-color: RGB(54, 181, 75) !important;
+    border-color: RGB(54, 181, 75) !important; 
+}
+
+/*LINKEDIN*/
+.linkedin-link {
+    text-decoration: none !important;
+    color: RGB(54, 181, 75) !important;
+    transition: 0.5s !important; /*NOT WORKING*/
+}
+
+.linkedin-link:hover {
+    transform: scale(1.2) !important;
+}
+
+.linkedin-text {
+    text-shadow: 0 0 3px RGB(54, 181, 75) ;
+}
