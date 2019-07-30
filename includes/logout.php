@@ -1,10 +1,10 @@
-<?php session_start(); ?>
-
 <?php 
-    $_SESSION['username'] = null;
-    $_SESSION['user_firstname'] = null;
-    $_SESSION['user_lastname'] = null;
-    $_SESSION['user_role'] = null;
+ob_start();
+session_start(); 
 
-    header("Location: ../index.php");
-?>
+$_SESSION['username'] = null;
+$_SESSION['user_firstname'] = null;
+$_SESSION['user_lastname'] = null;
+$_SESSION['user_role'] = null;
+
+header("Location: ../index.php");
