@@ -9,11 +9,13 @@
         <h4 class="modal-title text-center">DELETE</h4>
       </div>
       <div class="modal-body">
-        <p class="text-center">Are you sure you want to delete?</p>
       </div>
-      <div class="modal-footer modal-footer-border">
-       <a href="" class="btn btn-danger modal_delete_link">Delete</a>
-        <button type="button" class="btn btn-default cancel-button" data-dismiss="modal">Cancel</button>
+      <div class="modal-footer">
+        <form style="position:absolute; margin-left:425px " action="" method="post">
+          <input type="hidden" class='modal_delete_link' name="delete_item" value=''>
+          <input class="btn btn-danger delete_link" type='submit' name='delete' value='Delete'>
+        </form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

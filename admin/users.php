@@ -1,5 +1,5 @@
-<?php 
-ob_start(); 
+<?php
+ob_start();
 include("includes/admin_header.php");
 
 if (!is_admin($_SESSION['username'])) {

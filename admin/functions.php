@@ -29,7 +29,12 @@ function selectFromRoleStatus($table, $role, $status)
     $select_all_role_status = mysqli_query($connection, $query);
     return mysqli_num_rows($select_all_role_status);
 }
-
+//UPDATE USER ROLE 
+function updateUserRole($role, $id) {
+    global $connection;
+    $query = "UPDATE users SET user_role = '{$role}' WHERE user_id = $id ";
+    return mysqli_query($connection, $query);
+}
 //VALIDATE USER ONLINE OR NOT
 function users_online()
 {
@@ -91,26 +96,6 @@ function insert_categories()
             }
         }
         header("Location: categories.php");
-    }
-}
-//FIND ALL CATEGORIES
-function findAllCategories()
-{
-    global $connection;
-    $query = 'SELECT * FROM categories';
-    $select_categories = mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_assoc($select_categories)) {
-        $cat_id = $row['cat_id'];
-        $cat_title = $row['cat_title'];
-        echo "<tr>";
-        ?>
-        <td><input class="checkBoxes" type="checkbox" name='checkBoxArray[]' value='<?php echo $cat_id ?>'></td>
-        <?php
-        echo "<td>{$cat_id}</td>";
-        echo "<td>{$cat_title}</td>";
-        echo "<td class='links-color'><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
-        echo "<td class='links-color'><a onClick=\" javascript: return confirm('Are you sure you want to delete'); \" href='categories.php?delete={$cat_id}'>Delete</a></td>";
-        echo "</tr>";
     }
 }
 //CLONE CATEGORY
@@ -248,7 +233,7 @@ function login_user($username, $password)
         $_SESSION['user_lastname'] = $db_user_lastname;
         $_SESSION['user_role'] = $db_user_role;
 
-        header("Location: ../admin");
+        header("Location: /leaf-cms-php/admin/");
     } else {
         header("Location: ../index.php");
     }
