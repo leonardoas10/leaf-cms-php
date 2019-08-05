@@ -84,16 +84,15 @@ include("./includes/delete_modal.php");
 
                                     ?>
                                     <?php 
-                                    deleteCategories(); 
                                    
                                     if (isset($_POST['edit'])) {
                                         header("Location:categories.php?edit=" . $cat_id);
                                     }
                                     if (isset($_POST['delete_item'])) {
-                                        $the_post_id =  escape($_POST['delete_item']);
-                                        $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
+                                        $the_category_id =  escape($_POST['delete_item']);
+                                        $query = "DELETE FROM categories WHERE cat_id = {$the_category_id} ";
                                         $delete_query = mysqli_query($connection, $query);
-                                        header('Location:posts.php');
+                                        header('Location:categories.php');
                                     }
                                     ?>
                                 </tbody>

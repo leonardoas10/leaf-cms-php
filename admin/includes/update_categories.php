@@ -10,11 +10,11 @@
             } else {
                 if (isset($_GET['edit'])) {
                     $cat_id = $_GET['edit'];
-                    $query = "UPDATE categories SET cat_title = '$cat_title' WHERE cat_id = $cat_id";
+                    $stmt = mysqli_prepare($connection, "UPDATE categories SET cat_title = ? WHERE cat_id = ?");
+                    mysqli_stmt_bind_param($stmt, "si", $cat_title, $cat_id);
+                    mysqli_stmt_execute($stmt);
 
-                    $update_category_query = mysqli_query($connection, $query);
-
-                    if (!$update_category_query) {
+                    if (!$stmt) {
                         die("Not connect with DB" . mysqli_error($connection));
                     }
                 }

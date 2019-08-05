@@ -5,6 +5,7 @@ function escape($string)
     global $connection;
     return mysqli_real_escape_string($connection, trim($string));
 }
+
 //SELECT FROM AND COUNT 
 function selectFromCount($table)
 {
@@ -30,7 +31,8 @@ function selectFromRoleStatus($table, $role, $status)
     return mysqli_num_rows($select_all_role_status);
 }
 //UPDATE USER ROLE 
-function updateUserRole($role, $id) {
+function updateUserRole($role, $id)
+{
     global $connection;
     $query = "UPDATE users SET user_role = '{$role}' WHERE user_id = $id ";
     return mysqli_query($connection, $query);
@@ -87,11 +89,12 @@ function insert_categories()
         if ($cat_title == "" || empty($cat_title)) {
             echo "this field shouldn´t be empty";
         } else {
-            $query = "INSERT INTO categories(cat_title) VALUE('{$cat_title}')";
+            $stmt = mysqli_prepare($connection, "INSERT INTO categories (cat_title) VALUES(?)");
 
-            $create_category_query = mysqli_query($connection, $query);
+            mysqli_stmt_bind_param($stmt, "s", $cat_title);
+            mysqli_stmt_execute($stmt);
 
-            if (!$create_category_query) {
+            if (!$stmt) {
                 die("Not connect with DB" . mysqli_error($connection));
             }
         }
@@ -134,17 +137,7 @@ function cloneCategories()
         }
     }
 }
-//DELETE CATEGORY
-function deleteCategories()
-{
-    global $connection;
-    if (isset($_GET['delete'])) {
-        $the_cat_id = $_GET['delete'];
-        $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id} ";
-        $delete_query = mysqli_query($connection, $query);
-        header("Location: categories.php");
-    }
-}
+
 // VALIDATION OF ROLE STATUS TO ADMIN
 function is_admin($username)
 {
@@ -205,6 +198,28 @@ function registration_user($firstname, $lastname, $username, $email, $password)
     confirmQuery($newUser);
 }
 
+function ifItIsMethod($method = null)
+{
+    if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)) {
+        return true;
+    }
+    return false;
+}
+
+function isLoggedIn()
+{
+    if (isset($_SESSION['user_role'])) {
+        return true;
+    }
+    return false;
+}
+function checkIfUserIsLoggedInAndRedirect($redirectLocation = null)
+{
+    if (isLoggedIn()) {
+        header(`Location: $redirectLocation `);
+    }
+}
+
 function login_user($username, $password)
 {
     global $connection;
@@ -218,23 +233,23 @@ function login_user($username, $password)
     }
 
     while ($row = mysqli_fetch_array($select_user_query)) {
-        $db_user_id = $row['user_id'];
         $db_username = $row['username'];
         $db_user_password = $row['user_password'];
         $db_user_firstname = $row['user_firstname'];
         $db_user_lastname = $row['user_lastname'];
         $db_user_role = $row['user_role'];
+
+        if (password_verify($password, $db_user_password)) {
+
+            $_SESSION['username'] = $db_username;
+            $_SESSION['user_firstname'] = $db_user_firstname;
+            $_SESSION['user_lastname'] = $db_user_lastname;
+            $_SESSION['user_role'] = $db_user_role;
+
+            header("Location: /leaf-cms-php/admin/");
+        } else {
+            return false;
+        }
     }
-
-    if (password_verify($password, $db_user_password)) {
-
-        $_SESSION['username'] = $db_username;
-        $_SESSION['user_firstname'] = $db_user_firstname;
-        $_SESSION['user_lastname'] = $db_user_lastname;
-        $_SESSION['user_role'] = $db_user_role;
-
-        header("Location: /leaf-cms-php/admin/");
-    } else {
-        header("Location: ../index.php");
-    }
+    return true;
 }

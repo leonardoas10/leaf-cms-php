@@ -2,7 +2,9 @@
 include("includes/db.php");
 include("includes/header.php");
 include("includes/navigation.php"); 
+
 ?>
+<?php session_start(); ?>
    
     <!-- Page Content -->
     <div class="container">
@@ -14,7 +16,7 @@ include("includes/navigation.php");
                 
                 <?php 
                 if(!isset($_GET['page'])) {
-                    header("Location: index.php?page=1");
+                    header("Location: /leaf-cms-php?page=1");
                 }
                     
                 $per_page = 5;
@@ -54,7 +56,7 @@ include("includes/navigation.php");
                 ?>
                 <!-- First Blog Post -->
                 <h2>
-                    <a class="post-title" href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                    <a class="post-title" href="post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
                     Posted by: <?php echo $post_user?>

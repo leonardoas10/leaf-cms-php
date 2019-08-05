@@ -1,5 +1,3 @@
-<?php session_start() ?>
-   
 
    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -13,7 +11,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="index.php"><span class="navbar-brand glyphicon glyphicon-leaf leaf-icon"></span></a>
-                <a class=" navbar-brand navbar-title" href="index.php">Leaf CMS</a>
+                <a class=" navbar-brand navbar-title" href="/leaf-cms-php">Leaf CMS</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -39,17 +37,34 @@
                     } else if($pageName == $contact){
                         $contact_class = 'active';
                     } 
-                    echo "<li class='$category_class'><a class='navbar-subtitles' href='./category.php?category=$cat_id&page=1'>{$cat_title}</a></li>";
+                    echo "<li class='$category_class'><a class='navbar-subtitles' href='/leaf-cms-php/category/$cat_id&1'>{$cat_title}</a></li>";
                 }
                 ?>
                     <li class="<?php echo $contact_class; ?>" ><a class="navbar-subtitles" href='
-                    contact.php'>Contact Us</a></li>;
+                    contact'>Contact Us</a></li>;
                 </ul>    
+
                 <ul class="nav navbar-nav navbar-right">
-                        <li><a class="navbar-subtitles" href='
-                    admin '>Admin</a></li>;
-                        <li class="<?php echo $registration_class; ?>"><a class="navbar-subtitles" href='
-                    registration.php'>Registration</a></li>;    
+                <?php if(isLoggedIn()): ?>
+
+                    <li>
+                        <a class="navbar-subtitles" href='/leaf-cms-php/admin '>Admin</a>;
+                    </li>
+
+                    <li>
+                        <a class="navbar-subtitles" href='/leaf-cms-php/includes/logout.php '>Log Out</a>;
+                    </li>
+
+            <?php else:?> 
+            
+                    <li>
+                        <a class="navbar-subtitles" href='/leaf-cms-php/login '>Login</a>;
+                    </li>
+                
+                <?php endif;?>   
+                        
+                        
+                        <li class="<?php echo $registration_class; ?>"><a class="navbar-subtitles" href='/leaf-cms-php/registration'>Registration</a></li>;    
                     
                     <?php 
                     
@@ -57,7 +72,7 @@
                         
                         if(isset($_GET['p_id'])) {                  
                             $the_post_id = $_GET['p_id'];
-                            echo "<li><a class='navbar-subtitles' href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+                            echo "<li><a class='navbar-subtitles' href='/leaf-cms-php/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
                         }
                     }   
                     ?>

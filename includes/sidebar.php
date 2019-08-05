@@ -1,3 +1,17 @@
+
+<?php 
+
+    if(ifItIsMethod('post')) {
+        if(isset($_POST['username']) && isset($_POST['password'])) {
+            login_user(escape(trim($_POST['username'])), escape(trim($_POST['password'])));
+        } else {
+            header("Location: /leaf-cms-php/index");
+        }
+    }
+
+?>
+
+
 <div class="col-md-4">
 
                 <!-- Blog Search Well -->
@@ -27,7 +41,7 @@
                            
                    <?php else: ?>
                        <h4>Login</h4>
-                    <form action="includes/login.php" method="post">
+                    <form method="post">
                         <div class="form-group">
                             <input name="username" type="text" class="form-control input-background" placeholder="Enter Username">
                         </div>
@@ -38,6 +52,10 @@
                                   Submit     
                                 </button>
                             </span>
+                        </div>
+
+                        <div class="form-group">
+                            <a href="forgot.php?forgot=<?php echo uniqid(true)?>">Forgot Password</a>
                         </div>
                     </form>
                     <!-- /.input-group -->   

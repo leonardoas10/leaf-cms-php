@@ -7,9 +7,7 @@ if (!is_admin($_SESSION['username'])) {
 }
 ?>
 <div id="wrapper">
-
     <?php include("includes/admin_navigation.php") ?>
-
     <div id="page-wrapper">
         <div class="container-fluid">
             <!-- Page Heading -->
@@ -26,7 +24,6 @@ if (!is_admin($_SESSION['username'])) {
                     } else {
                         $source = '';
                     }
-
                     switch ($source) {
                         case 'add_user';
                             include("includes/add_user.php");
@@ -40,8 +37,6 @@ if (!is_admin($_SESSION['username'])) {
                             include("includes/view_all_users.php");
                             break;
                     }
-
-
                     ?>
                 </div>
             </div>
