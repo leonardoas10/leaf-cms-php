@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php session_start(); ?>
-<?php include('./admin/functions.php')?>
+<?php 
+session_start(); 
+include('./admin/functions.php')?>
 <head>
 
     <meta charset="utf-8">

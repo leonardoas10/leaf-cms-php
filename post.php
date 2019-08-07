@@ -2,7 +2,8 @@
 include("includes/db.php");
 ob_start();
 include("includes/header.php");
-include("includes/navigation.php"); ?>
+include("includes/navigation.php"); 
+?>
 
 <!-- Page Content -->
 <div class="container">
@@ -37,17 +38,11 @@ include("includes/navigation.php"); ?>
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
-                        ?>
-                        <h1 class="page-header">
-                            Posts
-                        </h1>
+            ?>
+                        <h1 class="page-header">Posts</h1>
                         <!-- First Blog Post -->
-                        <h2 class="post-title-selected">
-                            <?php echo $post_title ?>
-                        </h2>
-                        <p class="lead">
-                            Posted by <?php echo $post_user ?>
-                        </p>
+                        <h2 class="post-title-selected"><?php echo $post_title ?></h2>
+                        <p class="lead">Posted by <?php echo $post_user ?></p>
                         <p><span class="glyphicon glyphicon-time time-icon"></span> Posted on <?php echo $post_date ?></p>
                         <hr>
                         <img class="img-responsive" src="/leaf-cms-php/images/<?php echo imagePlaceholder($post_image); ?>" alt="/">
@@ -66,9 +61,7 @@ include("includes/navigation.php"); ?>
                         $comment_email = escape($_POST['comment_email']);
                         $comment_content = escape($_POST['comment_content']);
 
-
                         if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
-
 
                             $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($the_post_id, '{$comment_author}','{$comment_email}','{$comment_content}', 'Unapproved', now())";
 
@@ -106,7 +99,6 @@ include("includes/navigation.php"); ?>
                     </div>
 
                     <?php
-
                     $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} AND comment_status = 'Approved' ORDER BY comment_id DESC ";
                     $approve_comment_query = mysqli_query($connection, $query);
 
@@ -114,8 +106,7 @@ include("includes/navigation.php"); ?>
                         $comment_date = $row['comment_date'];
                         $comment_content = $row['comment_content'];
                         $comment_author = $row['comment_author'];
-                        ?>
-
+                    ?>
 
                         <!-- Comment -->
                         <div class="media">

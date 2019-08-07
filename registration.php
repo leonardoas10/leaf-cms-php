@@ -17,14 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'email' => '',
         'password' => '',
     ];
-
-    // function validationName($name) {
-    //     if (empty($name)) {
-    //         $error[`$name`] = "<h4 class='text-center bg-danger'> ". ucwords($name) . " cannot be empty</h4>";
-    //     } else if (strlen($name) < 2) {
-    //         $error[`$name`] = "<h4 class='text-center bg-danger'> ". ucwords($name) . " needs to be longer</h4>";
-    //     } 
-    // }
         
     if (empty($firstname)) {
         $error['firstname'] = "<h4 class='text-center bg-danger'> First Name cannot be empty</h4>";
@@ -76,10 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <?php include "includes/navigation.php"; ?>
 
-
 <!-- Page Content -->
 <div class="container">
-
     <section id="login">
         <div class="container">
             <div class="row">
@@ -117,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input type="submit" name="submit" id="btn-login" class="register-button btn btn-custom btn-lg btn-block " value="Register">
                             <p for=""><?php echo isset($_GET['success']) ? "<h4 class='text-center bg-success'> User Created </h4>" : "" ?></p>
                         </form>
-
                     </div>
                 </div> <!-- /.col-xs-12 -->
             </div> <!-- /.row -->

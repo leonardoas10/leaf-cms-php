@@ -11,9 +11,10 @@ RewriteRule ^category/(\d+)/(\d+)$ category.php?category=$1&page=$2 [NC,L]
 RewriteRule ^(\d+)$ index.php?page=$1 [NC,L]
 
 
-RewriteRule  (^admin\/)(\w+)$  admin/$2.php    [NC,L]
 
 
+
+#RewriteRule  (^admin\/)(\w+)$  admin/$2.php    [NC,L]
 
 
 #RewriteRule ^includes/(logout)$ $1.php [NC,L]
@@ -21,11 +22,3 @@ RewriteRule  (^admin\/)(\w+)$  admin/$2.php    [NC,L]
 
 #RewriteRule  ^admin\/(\w+)$  admin/categories.php?param=$1   [NC,L]
 
-
-
-
-#follwing codes redirect your url to htpps: from htpp:
-
-#RewriteCond %{HTTPS} !=on
-
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

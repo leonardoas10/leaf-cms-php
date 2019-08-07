@@ -3,26 +3,20 @@ include("includes/db.php");
 include("includes/header.php");
 ob_start(); 
 
-    checkIfUserIsLoggedInAndRedirect('/leaf-cms-php/admin');
+checkIfUserIsLoggedInAndRedirect('/leaf-cms-php/admin');
 
-    if(ifItIsMethod('post')) {
-        if(isset($_POST['username']) && isset($_POST['password'])) {
-            login_user(escape(trim($_POST['username'])), escape(trim($_POST['password'])));
-        } else {
-            header("Location: /leaf-cms-php/login");
-        }
+if(ifItIsMethod('post')) {
+    if(isset($_POST['username']) && isset($_POST['password'])) {
+        login_user(escape(trim($_POST['username'])), escape(trim($_POST['password'])));
+    } else {
+        header("Location: /leaf-cms-php/login");
     }
-
+}
 ?>
-
 <!-- Navigation -->
-
 <?php include "includes/navigation.php"; ?>
-
-
 <!-- Page Content -->
 <div class="container">
-
     <div class="form-gap"></div>
     <div class="container">
         <div class="row">
@@ -37,7 +31,6 @@ ob_start();
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-user color-blue user-icon"></i></span>
-
                                             <input name="username" type="text" class="form-control input-background" placeholder="Enter Username">
                                         </div>
                                     </div>

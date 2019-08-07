@@ -1,6 +1,8 @@
-<?php include("includes/db.php"); ?>
-<?php include("includes/header.php"); ?>
-<?php include("includes/navigation.php"); ?>
+<?php 
+include("includes/db.php"); 
+include("includes/header.php");
+include("includes/navigation.php"); 
+?>
 
 <!-- Page Content -->
 <div class="container">
@@ -52,7 +54,6 @@
             }
 
             mysqli_stmt_store_result($stm); 
-
             $count = mysqli_stmt_num_rows($stm);
             $count = ceil($count / $per_page); 
 
@@ -71,14 +72,9 @@
                 while (mysqli_stmt_fetch($stm3)) {
                     
                     ?>
-
                     <!-- First Blog Post -->
-                    <h2>
-                        <a class="post-title" href="/leaf-cms-php/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
-                    </h2>
-                    <p class="lead">
-                        Posted by: <?php echo $post_user ?>
-                    </p>
+                    <h2><a class="post-title" href="/leaf-cms-php/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
+                    <p class="lead">Posted by: <?php echo $post_user ?></p>
                     <p><span class="glyphicon glyphicon-time time-icon"></span> Posted on <?php echo $post_date ?></p>
                     <hr>
                     <img class="img-responsive" src="/leaf-cms-php/images/<?php echo imagePlaceholder($post_image); ?>" alt="/">
@@ -90,7 +86,6 @@
                 <?php }
              ?>
         </div>
-
         <!-- Blog Sidebar Widgets Column -->
         <?php include("includes/sidebar.php"); ?>
     </div>

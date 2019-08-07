@@ -7,7 +7,6 @@ if (!isset($_GET['email']) && !isset($_GET['token'])) {
 }
 
 if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token=?')) {
-
     mysqli_stmt_bind_param($stmt, "s", $_GET['token']);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $username, $user_email, $token);
@@ -20,15 +19,12 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
 
     if (isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
-
         if ($_POST['password'] === $_POST['confirmPassword']) {
-
 
             $password = $_POST['password'];
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 
             if ($stmt = mysqli_prepare($connection, "UPDATE users SET token='', user_password='{$hashedPassword}' WHERE user_email = ?")) {
-
                 mysqli_stmt_bind_param($stmt, "s", $_GET['email']);
                 mysqli_stmt_execute($stmt);
 
@@ -84,7 +80,6 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
             </div>
         </div>
     </div>
-
 
     <hr>
 

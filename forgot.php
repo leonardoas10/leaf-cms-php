@@ -3,11 +3,9 @@ include "includes/db.php";
 include "includes/header.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 // Load Composer's autoloader
 require 'vendor/autoload.php';
-
 
 // Instantiation and passing `true` enables exceptions
 $mail = new PHPMailer(true);
@@ -29,10 +27,8 @@ if (ifItIsMethod('post')) {
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
 
-
                 // CONFIGURE PHPMAILER
                 $mail = new PHPMailer();
-
                 $mail->SMTPDebug = 0; //to see bugs change: 2                                 
                 $mail->isSMTP();      
                 $mail->SMTPAuth   = true;    
@@ -43,12 +39,9 @@ if (ifItIsMethod('post')) {
                 $mail->Port       = Config::SMTP_PORT;
                 $mail->isHTML(true);
                 $mail->CharSet = 'UTF-8';
-
                 $mail->setFrom('leoaranguren10@gmail.com', 'Leonardo Aranguren');
                 $mail->addAddress($email);
-
                 $mail->Subject = 'This is a test email';
-
                 $mail->Body = '
                 
                 <p>Please click here to reset your password<a href="http://localhost/leaf-cms-php/reset.php?email=' . $email . '&token=' .$token. ' " target=_blank " >http://localhost/leaf-cms-php/reset.php?email=' . $email . '&token=' .$token. '"</a></p>

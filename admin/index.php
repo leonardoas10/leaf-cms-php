@@ -140,7 +140,7 @@
                             $color = ['color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray',];
 
                             for ($i = 0; $i < 8; $i++) {
-                                echo "['{$element_text[$i]}'" . " ," . "{$element_count[$i]}" . " ," . "{$color[$i]} ],";
+                                echo "['{$element_text[$i]}'" . " ," . "{$element_count[$i]}" . " ," . "'{$color[$i]}' ],";
                             }
                             ?>
                         ]);
