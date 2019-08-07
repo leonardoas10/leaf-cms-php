@@ -1,0 +1,17 @@
+{
+    "name": "leonardo/leaf-cms-php",
+    "require": {
+        "phpmailer/phpmailer": "^6.0"
+    },
+    "autoload": {
+        "classmap": [
+            "classes"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Leonardo Aranguren",
+            "email": "leoaranguren10@gmail.com"
+        }
+    ]
+}

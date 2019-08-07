@@ -53,7 +53,7 @@
                 </ul>
             </li>
             <li>
-                <a href="./categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
+                <a href="/leaf-cms-php/admin/categories/"><i class="fa fa-fw fa-wrench"></i> Categories</a>
             </li>
 
             <li class="">

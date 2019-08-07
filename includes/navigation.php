@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="index.php"><span class="navbar-brand glyphicon glyphicon-leaf leaf-icon"></span></a>
+                <a href="/leaf-cms-php"><span class="navbar-brand glyphicon glyphicon-leaf leaf-icon"></span></a>
                 <a class=" navbar-brand navbar-title" href="/leaf-cms-php">Leaf CMS</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -37,11 +37,10 @@
                     } else if($pageName == $contact){
                         $contact_class = 'active';
                     } 
-                    echo "<li class='$category_class'><a class='navbar-subtitles' href='/leaf-cms-php/category/$cat_id&1'>{$cat_title}</a></li>";
+                    echo "<li class='$category_class'><a class='navbar-subtitles' href='/leaf-cms-php/category/$cat_id/1'>{$cat_title}</a></li>";
                 }
                 ?>
-                    <li class="<?php echo $contact_class; ?>" ><a class="navbar-subtitles" href='
-                    contact'>Contact Us</a></li>;
+                    <li class="<?php echo $contact_class; ?>" ><a class="navbar-subtitles" href='/leaf-cms-php/contact'>Contact Us</a></li>;
                 </ul>    
 
                 <ul class="nav navbar-nav navbar-right">
@@ -52,7 +51,7 @@
                     </li>
 
                     <li>
-                        <a class="navbar-subtitles" href='/leaf-cms-php/includes/logout.php '>Log Out</a>;
+                        <a class="navbar-subtitles" href='/leaf-cms-php/includes/logout'>Log Out</a>;
                     </li>
 
             <?php else:?> 

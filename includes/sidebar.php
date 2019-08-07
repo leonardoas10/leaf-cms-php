@@ -1,14 +1,14 @@
 
 <?php 
-
     if(ifItIsMethod('post')) {
-        if(isset($_POST['username']) && isset($_POST['password'])) {
-            login_user(escape(trim($_POST['username'])), escape(trim($_POST['password'])));
-        } else {
-            header("Location: /leaf-cms-php/index");
+        if(isset($_POST['login'])) {
+            if(isset($_POST['username']) && isset($_POST['password'])) {
+                login_user(escape(trim($_POST['username'])), escape(trim($_POST['password'])));
+            } else {
+                header("Location: /leaf-cms-php/index");
+            }
         }
     }
-
 ?>
 
 
@@ -54,7 +54,7 @@
                             </span>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group forgot-link">
                             <a href="forgot.php?forgot=<?php echo uniqid(true)?>">Forgot Password</a>
                         </div>
                     </form>

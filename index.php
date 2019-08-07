@@ -2,9 +2,8 @@
 include("includes/db.php");
 include("includes/header.php");
 include("includes/navigation.php"); 
-
 ?>
-<?php session_start(); ?>
+
    
     <!-- Page Content -->
     <div class="container">
@@ -16,7 +15,7 @@ include("includes/navigation.php");
                 
                 <?php 
                 if(!isset($_GET['page'])) {
-                    header("Location: /leaf-cms-php?page=1");
+                    header("Location: /leaf-cms-php/1");
                 }
                     
                 $per_page = 5;
@@ -65,10 +64,10 @@ include("includes/navigation.php");
                 <hr>
                 
                 <a href="post.php?p_id=<?php echo $post_id;?>">
-                <img class="img-responsive" src="images/<?php echo $post_image?>" alt="/"></a>
+                <img class="img-responsive" src="images/<?php echo imagePlaceholder($post_image)?>" alt="/"></a>
                 <hr>
                 <p><?php echo $post_content?></p>
-                <a class="btn btn-primary read-more" href="post.php?p_id=<?php echo $post_id;?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary read-more" href="post/<?php echo $post_id;?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
                 <?php } }?>
@@ -84,9 +83,9 @@ include("includes/navigation.php");
            <?php 
                 for($i=1;$i<=$count; $i++) {
                     if($i == $page) {
-                        echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                        echo "<li><a class='active_link' href='/leaf-cms-php/{$i}'>{$i}</a></li>";
                     } else {
-                         echo "<li><a class='inactive_link' href='index.php?page={$i}'>{$i}</a></li>";
+                         echo "<li><a class='inactive_link' href='/leaf-cms-php/{$i}'>{$i}</a></li>";
                     }
                 }
             ?>

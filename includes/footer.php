@@ -4,7 +4,7 @@
                 <div class="col-lg-12">
                    <p>Developed By: Leonardo AS /     
                         <a class="linkedin-link" href="https://www.linkedin.com/in/leonardoas10/" target="_blank">Linkedin Profile</a>
-                        <img width="18" src="images/linkedin.png" alt="icon_linkedin">
+                        <img width="18" src="/leaf-cms-php/images/linkedin.png" alt="icon_linkedin">
                    </p>
                     <p class="linkedin-text">Copyright &copy; Leaf CMS 2019</p>
                 </div>

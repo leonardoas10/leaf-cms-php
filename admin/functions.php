@@ -6,6 +6,14 @@ function escape($string)
     return mysqli_real_escape_string($connection, trim($string));
 }
 
+function imagePlaceholder($image='') {
+    if(!$image) {
+        return 'leaf-cms-php/images/noplacelike.png';
+    } else {
+        return $image;
+    }
+}
+
 //SELECT FROM AND COUNT 
 function selectFromCount($table)
 {

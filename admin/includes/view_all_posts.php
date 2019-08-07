@@ -110,7 +110,8 @@ if (isset($_POST['checkBoxArray'])) {
             </thead>
             <tbody>
                 <?php
-                $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id";
+                $user = $_SESSION['username'];
+$query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id WHERE post_user = '$user'";
                 $select_posts = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -139,7 +140,7 @@ if (isset($_POST['checkBoxArray'])) {
                     echo "<td>$post_tags</td>";
                     echo "<td>$post_views_count</td>";
                     echo "<td>$post_date</td>";
-                    echo "<td class='links-color'><a href='../post.php?p_id={$post_id}'>View Post   </a></td>";
+                    echo "<td class='links-color'><a href='../post/{$post_id}'>View Post   </a></td>";
 
                     $query = "SELECT * FROM comments WHERE comment_post_id = {$post_id}";
                     $comment_count_query = mysqli_query($connection, $query);

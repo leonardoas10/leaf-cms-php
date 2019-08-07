@@ -11,7 +11,7 @@
             if (isset($_GET['category'])) {
 
                 if (!isset($_GET['page'])) {
-                    header("Location: index.php?page=1");
+                    header("Location: /leaf-cms-php/1");
                 }
 
                 $per_page = 5;
@@ -74,17 +74,17 @@
 
                     <!-- First Blog Post -->
                     <h2>
-                        <a class="post-title" href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                        <a class="post-title" href="/leaf-cms-php/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                     </h2>
                     <p class="lead">
                         Posted by: <?php echo $post_user ?>
                     </p>
                     <p><span class="glyphicon glyphicon-time time-icon"></span> Posted on <?php echo $post_date ?></p>
                     <hr>
-                    <img class="img-responsive" src="images/<?php echo $post_image ?>" alt="/">
+                    <img class="img-responsive" src="/leaf-cms-php/images/<?php echo imagePlaceholder($post_image); ?>" alt="/">
                     <hr>
                     <p><?php echo $post_content ?></p>
-                    <a class="btn btn-primary read-more" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <a class="btn btn-primary read-more" href="/leaf-cms-php/post/<?php echo $post_id;?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                     <hr>
                 <?php }

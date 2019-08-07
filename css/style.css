@@ -24,14 +24,12 @@
     color: RGB(54, 181, 75) !important;
 }
 
-/*LEAF ICON*/
+/*ICONS*/
 .leaf-icon {
     color: RGB(54, 181, 75) !important;
     font-size: 30px !important;
 }
-
-/*TIME ICON*/
-.time-icon {
+.time-icon, .email-icon, .user-icon, .wallet-icon, .check-icon {
     color: RGB(54, 181, 75) !important;
 }
 /*INPUTS BACKGROUND*/
@@ -107,7 +105,21 @@
     border-color: RGB(54, 181, 75) !important; 
     opacity: 1 !important;
 }
+/* FORGOT LINK */
+.forgot-link{
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+}
 
+.forgot-link a{
+    text-decoration: none !important;
+    color: RGB(158, 225, 161) !important;
+}
+
+.forgot-link a:hover{
+    text-decoration: none !important;
+    color: RGB(54, 181, 75) !important;
+}
 /*BLOG CATEGORIES*/
 
 .categories-list {
@@ -189,3 +201,25 @@
 .linkedin-text {
     text-shadow: 0 0 3px RGB(54, 181, 75) ;
 }
+
+/* FORGOT | RESET | LOGIN */
+
+.forgot-card, .reset-card, .login-card {
+    border: 0.5px solid RGB(54, 181, 75) !important; 
+    border-radius: 2px;
+}
+
+.forgot-button, .reset-button, .login-button:hover {
+    background-color: RGB(54, 181, 75) !important;
+    opacity: 0.6 !important;
+    transition: 0.5s;
+    border-color: none !important;
+}
+
+.forgot-button:hover, .reset-button:hover, .login-button:hover  {
+    opacity: 1 !important;
+    transform: scale(1.1);
+}
+
+
+

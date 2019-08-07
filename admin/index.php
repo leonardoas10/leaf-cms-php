@@ -1,12 +1,9 @@
 <?php include("includes/admin_header.php") ?>
 
 <div id="wrapper">
-
     <?php include("includes/admin_navigation.php") ?>
     <div id="page-wrapper">
-
         <div class="container-fluid">
-
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
@@ -20,7 +17,6 @@
             <!-- /.row -->
 
             <!-- /.row -->
-
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
@@ -135,15 +131,16 @@
 
                     function drawChart() {
                         var data = google.visualization.arrayToDataTable([
-                            ['', 'Count'],
+                            ['', 'Count', { role: 'style' }],
 
                             <?php
 
                             $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pendind Commments', 'Users', 'Subscribers', 'Categories'];
                             $element_count = [$posts_count, $post_published_count, $post_draft_count, $comments_count, $unapproved_comments_count, $users_count, $subscriber_count, $categories_count];
+                            $color = ['color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray',];
 
                             for ($i = 0; $i < 8; $i++) {
-                                echo "['{$element_text[$i]}'" . " ," . "{$element_count[$i]}],";
+                                echo "['{$element_text[$i]}'" . " ," . "{$element_count[$i]}" . " ," . "{$color[$i]} ],";
                             }
                             ?>
                         ]);
