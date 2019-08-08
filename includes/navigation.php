@@ -39,25 +39,17 @@
             ?>
                 <li class="<?php echo $contact_class; ?>" ><a class="navbar-subtitles" href='/leaf-cms-php/contact'>Contact Us</a></li>;
             </ul>    
-
             <ul class="nav navbar-nav navbar-right">
             <?php if(isLoggedIn()): ?>
-
                 <li><a class="navbar-subtitles" href='/leaf-cms-php/admin '>Admin</a>;</li>
                 <li><a class="navbar-subtitles" href='/leaf-cms-php/includes/logout'>Log Out</a>;</li>
-                
             <?php else:?> 
-        
                 <li><a class="navbar-subtitles" href='/leaf-cms-php/login '>Login</a>;</li>
-            
             <?php endif;?>   
-                        
-                <li class="<?php echo $registration_class; ?>"><a class="navbar-subtitles" href='/leaf-cms-php/registration'>Registration</a></li>;    
-                
+                <li class="<?php echo $registration_class; ?>"><a class="navbar-subtitles" href='/leaf-cms-php/registration'>Registration</a></li>;
             <?php 
                 
             if(isset($_SESSION['user_role'])) {
-                
                 if(isset($_GET['p_id'])) {                  
                     $the_post_id = $_GET['p_id'];
                     echo "<li><a class='navbar-subtitles' href='/leaf-cms-php/admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";

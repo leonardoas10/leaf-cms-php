@@ -1,11 +1,9 @@
-<?php ob_start(); 
-include("./includes/delete_modal.php");?>
-<?php
+<?php 
+ob_start(); 
+include("./includes/delete_modal.php");
 
 if (isset($_POST['checkBoxArray'])) {
-
     foreach ($_POST['checkBoxArray'] as $postValueId) {
-
         $bulk_options = $_POST['bulk_options'];
 
         switch ($bulk_options) {
@@ -28,7 +26,6 @@ if (isset($_POST['checkBoxArray'])) {
         }
     }
 }
-
 ?>
 
 <form action="" method="post">
@@ -41,12 +38,10 @@ if (isset($_POST['checkBoxArray'])) {
                     <option value="Unapproved">Unapproved</option>
                     <option value="Delete">Delete </option>
                 </select>
-
             </div>
             <div class="col-xs-4">
                 <input type="submit" name="submit" class="btn btn-success submit-buttons" value="Apply">
             </div>
-
             <table class="table table-bordered table-hover tr-background">
                 <thead>
                     <tr>
@@ -80,12 +75,8 @@ if (isset($_POST['checkBoxArray'])) {
 
                         echo "<tr>";
                     ?>
-
                         <td><input class="checkBoxes" type="checkbox" name='checkBoxArray[]' value='<?php echo $comment_id ?>'></td>
-
                         <?php
-
-
                         echo "<td>$comment_id</td>";
                         echo "<td>$comment_author</td>";
                         echo "<td>$comment_content</td>";
@@ -93,7 +84,6 @@ if (isset($_POST['checkBoxArray'])) {
                         echo "<td>$comment_status</td>";
 
                         $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
-
                         $select_post_id_query = mysqli_query($connection, $query);
                         while ($row = mysqli_fetch_assoc($select_post_id_query)) {
                             $post_id = $row['post_id'];
@@ -118,7 +108,6 @@ if (isset($_POST['checkBoxArray'])) {
             </table>
         </table>
 </form>
-
 <?php
 if (isset($_GET['approve'])) {
     $the_comment_id = $_GET['approve'];

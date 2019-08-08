@@ -1,5 +1,9 @@
-<?php include("includes/admin_header.php") ?>
-
+<?php 
+include("includes/admin_header.php");
+// require 'vendor/autoload.php'; 
+// $dotenv = Dotenv\Dotenv::create(__DIR__);
+// $dotenv->load();
+?>
 <div id="wrapper">
     <?php include("includes/admin_navigation.php") ?>
     <div id="page-wrapper">
@@ -162,4 +166,22 @@
         <!-- /.container-fluid -->
     </div>
     <!-- /#page-wrapper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
+
 <?php include("includes/admin_footer.php") ?>
+
+
+<script>
+$(document).ready(function() {
+    const pusher = new Pusher('d2b0ebf9241225592540', {
+        cluster: 'us2',
+        forceTLS: true
+    });
+    const notificationChannel = pusher.subscribe('notifications');
+
+    notificationChannel.bind('new_user', function(notification) {
+        const message = notification.message;
+        toastr.success(`${message} just registered`);
+    });
+})
+</script>

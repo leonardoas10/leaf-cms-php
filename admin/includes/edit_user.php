@@ -1,8 +1,8 @@
-<?php ob_start() ?>
-<?php
+<?php 
+ob_start();
+
 
 if (isset($_GET['edit_user'])) {
-
     $the_user_id = $_GET['edit_user'];
 
     $query = "SELECT * FROM users WHERE user_id = $the_user_id";
@@ -18,26 +18,19 @@ if (isset($_GET['edit_user'])) {
         $user_role = $row['user_role'];
     }
     if (isset($_POST{'edit_user'})) {
-
         $user_firstname = escape($_POST['user_firstname']);
         $user_lastname = escape($_POST['user_lastname']);
         $user_role = $_POST['user_role'];
-
         $username = escape($_POST['username']);
         $user_email = escape($_POST['user_email']);
         $user_password = escape($_POST['user_password']);
 
         if (!empty($user_password)) {
-
             $query_password = "SELECT user_password FROM users WHERE user_id = $the_user_id";
             $get_user_query = mysqli_query($connection, $query_password);
-
             $row = mysqli_fetch_array($get_user_query);
-
             $db_user_password = $row['user_password'];
-
             confirmQuery($get_user_query);
-            //        
 
             if ($db_user_password != $user_password) {
                 $hashed_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10));
@@ -49,8 +42,6 @@ if (isset($_GET['edit_user'])) {
             confirmQuery($edit_user_query);
             header("Location: users.php");
         }
-
-
         //Close $_POST
     }
     //Close $_GET
@@ -76,7 +67,6 @@ if (isset($_GET['edit_user'])) {
             } else {
                 echo "<option value='Admin'>Admin</option>";
             }
-
             ?>
         </select>
     </div>

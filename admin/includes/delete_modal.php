@@ -1,7 +1,6 @@
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content modal-content-border">
       <div class="modal-header modal-header-border">

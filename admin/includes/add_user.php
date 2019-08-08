@@ -1,15 +1,12 @@
 <?php
 ob_start();
-
 if (isset($_POST{'create_user'})) {
-
     $user_firstname = escape(ucwords($_POST['user_firstname']));
     $user_lastname = escape(ucwords($_POST['user_lastname']));
     $user_role = $_POST['user_role'];
     $username = escape($_POST['username']);
     $user_email = escape($_POST['user_email']);
     $user_password = escape($_POST['user_password']);
-
     $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10));
 
     //        move_uploaded_file($post_image_temp, "../images/$post_image");

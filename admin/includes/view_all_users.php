@@ -1,18 +1,14 @@
-<?php ob_start();
+<?php 
+ob_start();
 include("./includes/delete_modal.php");
 
 if (isset($_GET['createduser'])) {
     $username = $_GET['createduser'];
     echo "<p class=' bg-success center'>User Created: " . " " . "{$username}" . "<br>" . "<hr>";
 } 
-?>
-
-<?php
 
 if (isset($_POST['checkBoxArray'])) {
-
     foreach ($_POST['checkBoxArray'] as $postValueId) {
-
         $bulk_options = $_POST['bulk_options'];
 
         switch ($bulk_options) {
@@ -35,7 +31,6 @@ if (isset($_POST['checkBoxArray'])) {
         }
     }
 }
-
 ?>
 <form action="" method="post">
     <table class="table table-bordered table-hover">
@@ -47,13 +42,10 @@ if (isset($_POST['checkBoxArray'])) {
                     <option value="Subscriber">Subscriber</option>
                     <option value="Delete">Delete </option>
                 </select>
-
             </div>
             <div class="col-xs-4">
                 <input type="submit" name="submit" class="btn btn-success submit-buttons" value="Apply">
             </div>
-
-
             <table class="table table-bordered table-hover tr-background">
                 <thead>
                     <tr>
@@ -115,17 +107,16 @@ if (isset($_GET['change_to_admin'])) {
     updateUserRole('Admin', $_GET['change_to_admin'] );
     header("Location: users.php");
 }
-?>
-<?php
+
 if (isset($_GET['change_to_sub'])) {
     updateUserRole('Subscriber', $_GET['change_to_sub'] );
     header("Location: users.php");
 }
-?>
-<?php
+
 if (isset($_POST['edit'])) {
     header("Location:users.php?source=edit_user&edit_user=" . $user_id);
 }
+
 if (isset($_POST['delete_item'])) {
     if (isset($_SESSION['user_role'])) {
         if ($_SESSION['user_role'] == 'Admin') {

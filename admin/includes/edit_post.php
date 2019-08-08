@@ -1,5 +1,5 @@
-<?php ob_start() ?>
-<?php
+<?php 
+ob_start(); 
 
 if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
@@ -37,7 +37,6 @@ if (isset($_POST['update_post'])) {
 
     header("Location: posts.php?updated&p_id={$the_post_id}");
 }
-
 ?>
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -64,10 +63,8 @@ if (isset($_POST['update_post'])) {
         </select>
     </div>
     <div class="form-group">
-
         <label for="user_id">Users</label>
         <select name="post_user" id="" class="input-background">
-
             <?php
             echo "<option value='{$post_user}'>{$post_user}</option>";
             $users_query = "SELECT * FROM users";

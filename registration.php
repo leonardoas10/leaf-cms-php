@@ -1,7 +1,19 @@
 <?php
+use Pusher\Pusher;
+
 ob_start();
 include "includes/db.php";
 include "includes/header.php";
+require 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
+$options = array(
+    'cluster' => 'us2',
+    'useTLS' => true
+);
+
+$pusher = new Pusher(getenv('APP_KEY'),getenv('APP_SECRET'),getenv('APP_ID'),$options);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $firstname = escape(ucwords($_POST['firstname']));
@@ -59,7 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if (empty($error)) {
         registration_user($firstname, $lastname, $username, $email, $password);
-        header('Location: registration.php?success');
+
+        $data['message'] = $username;
+
+        $pusher->trigger('notifications', 'new_user', $data);
+
+        login_user($username, $password);
     }
 }
 ?>

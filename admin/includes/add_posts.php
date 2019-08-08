@@ -1,15 +1,12 @@
-<?php ob_start() ?>
-<?php
-if (isset($_POST{
-'create_post'})) {
+<?php 
+ob_start();
+if (isset($_POST{'create_post'})) {
     $post_title = ucwords($_POST['post_title']);
     $post_user = ucwords($_POST['post_user']);
     $post_category_id = $_POST['post_category_id'];
     $post_status = $_POST['post_status'];
-
     $post_image = $_FILES['post_image']['name'];
     $post_image_temp = $_FILES['post_image']['tmp_name'];
-
     $post_tags = ucwords($_POST['post_tags']);
     $post_content = $_POST['post_content'];
     $post_date = date('d-m-y');
@@ -22,7 +19,6 @@ if (isset($_POST{
 
     $create_post_query = mysqli_query($connection, $query);
     confirmQuery($create_post_query);
-
     $last_id_query = mysqli_insert_id($connection);
 
     header("Location: posts.php?created&p_id={$last_id_query}");
@@ -64,29 +60,23 @@ if (isset($_POST{
     <div class="form-group">
         <select name="post_status" id="" class="input-background">
             <option value="Draft">Post Status</option>
-
             <option value="Published">Publish</option>
             <option value="Draft">Draft</option>
-
         </select>
     </div>
     <div class="form-group">
         <label for="post_image">Post Image</label>
         <input type="file" class="form-control input-background" name="post_image">
     </div>
-
     <div class="form-group">
         <label for="post_tags">Post Tags</label>
         <input type="text" class="form-control input-background" name="post_tags">
     </div>
-
     <div class="form-group">
         <label for="post_content">Post Content</label>
         <textarea type="text" class="form-control" id="body" cols="30" rows="10" name="post_content"></textarea>
     </div>
-
     <div class="form-group">
         <input class="btn btn-success submit-buttons" type="submit" name="create_post" value="Publish Post">
     </div>
-
 </form>

@@ -3,9 +3,7 @@ ob_start();
 include("delete_modal.php"); 
 
 if (isset($_GET['updated'])) {
-
     $the_post_id = $_GET['p_id'];
-
     $query = "SELECT * FROM posts WHERE post_id = {$the_post_id} ";
     $select_posts_status = mysqli_query($connection, $query);
     $row = mysqli_fetch_assoc($select_posts_status);
@@ -17,14 +15,10 @@ if (isset($_GET['updated'])) {
 }
 
 if (isset($_GET['created'])) {
-
     $the_post_id = $_GET['p_id'];
     
     echo "<p class=' bg-success center'>Post Created: " . " " . "<a href='../post.php?p_id={$the_post_id}' class='btn btn-success '>View Post</a></p>" . "<br>" . "<hr>";
 }
-?>
-
-<?php
 
 if (isset($_POST['checkBoxArray'])) {
     foreach ($_POST['checkBoxArray'] as $postValueId) {
@@ -50,8 +44,8 @@ if (isset($_POST['checkBoxArray'])) {
                 $query = "SELECT * FROM posts WHERE post_id = {$postValueId} ";
                 $select_post_query = mysqli_query($connection, $query);
                 confirmQuery($select_post_query);
-
                 $row = mysqli_fetch_assoc($select_post_query);
+
                 $post_title         = escape($row['post_title']);
                 $post_category_id   = $row['post_category_id'];
                 $post_date          = $row['post_date'];
@@ -73,7 +67,6 @@ if (isset($_POST['checkBoxArray'])) {
     }
 }
 ?>
-
 <form action="" method="post">
     <table class="table table-bordered table-hover tr-background">
         <div class="row">
@@ -111,11 +104,10 @@ if (isset($_POST['checkBoxArray'])) {
             <tbody>
                 <?php
                 $user = $_SESSION['username'];
-$query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id WHERE post_user = '$user'";
+                $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id WHERE post_user = '$user'";
                 $select_posts = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_posts)) {
-
                     $post_id = $row['post_id'];
                     $post_user =  stripcslashes($row['post_user']);
                     $post_title = stripcslashes($row['post_title']);
@@ -149,17 +141,16 @@ $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_ca
                     echo "<td class='links-color'><a href='post_comments.php?id=$post_id'>$count_comment</a></td>";
                     ?>
                     <form method="post">
-                        <?php
+                    <?php
                         echo "<td><input rel='$post_id' class='btn-xs btn-success submit-buttons' type='submit' name='edit' value='Edit'></td>";
                         echo "<td><input rel='$post_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
-                        ?>
+                    ?>
                     </form>
                     <?php 
 
                     echo "</tr>";
                 }
-                ?>
-
+                    ?>
             </tbody>
         </div>
     </table>
