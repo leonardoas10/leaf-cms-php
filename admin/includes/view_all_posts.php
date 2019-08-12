@@ -140,9 +140,10 @@ if (isset($_POST['checkBoxArray'])) {
 
                     echo "<td class='links-color'><a href='post_comments.php?id=$post_id'>$count_comment</a></td>";
                     ?>
-                    <form method="post">
+                    <form method="post" id="actions" >
                     <?php
-                        echo "<td><input rel='$post_id' class='btn-xs btn-success submit-buttons' type='submit' name='edit' value='Edit'></td>";
+                        echo "<input type='hidden' class='_id' name='edit' value=''>";
+                        echo "<td><input rel='$post_id' class='btn-xs btn-success submit-buttons edit_link' type='submit' name='edit' value='Edit'></td>";
                         echo "<td><input rel='$post_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
                     ?>
                     </form>
@@ -158,7 +159,8 @@ if (isset($_POST['checkBoxArray'])) {
 
 <?php
 if (isset($_POST['edit'])) {
-    header("Location:posts.php?source=edit_post&p_id=" . $post_id);
+    $the_post_id =  escape($_POST['edit']);
+    header("Location:posts.php?source=edit_post&p_id=" . $the_post_id);
 }
 if (isset($_POST['delete_item'])) {
     $the_post_id =  escape($_POST['delete_item']);

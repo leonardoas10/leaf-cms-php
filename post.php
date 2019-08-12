@@ -2,7 +2,39 @@
 include("includes/db.php");
 ob_start();
 include("includes/header.php");
-include("includes/navigation.php"); 
+include("includes/navigation.php");
+
+if (isset($_POST['liked'])) {
+
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+    // 1. FETCHING POST
+
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+    $postResult = mysqli_query($connection, $query);
+    $post = mysqli_fetch_array($postResult);
+    $likes = $post['post_likes'];
+
+    // 2. UPDATE POST
+    mysqli_query($connection, "UPDATE posts SET post_likes='{$likes}'+1 WHERE post_id='{$post_id}'");
+    // 3. CREATE LIKES FOR POST
+    mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id)");
+}
+if (isset($_POST['unliked'])) {
+
+    $post_id = $_POST['post_id'];
+    $user_id = $_POST['user_id'];
+    // 1. FETCHING POST
+
+    $query = "SELECT * FROM posts WHERE post_id=$post_id";
+    $postResult = mysqli_query($connection, $query);
+    $post = mysqli_fetch_array($postResult);
+    $likes = $post['post_likes'];
+
+    mysqli_query($connection, "DELETE FROM likes WHERE post_id=$post_id AND user_id=$user_id");
+    // 2. UPDATE POST
+    mysqli_query($connection, "UPDATE posts SET post_likes='{$likes}'-1 WHERE post_id='{$post_id}'");
+}
 ?>
 
 <!-- Page Content -->
@@ -38,7 +70,7 @@ include("includes/navigation.php");
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
-            ?>
+                        ?>
                         <h1 class="page-header">Posts</h1>
                         <!-- First Blog Post -->
                         <h2 class="post-title-selected"><?php echo $post_title ?></h2>
@@ -48,8 +80,33 @@ include("includes/navigation.php");
                         <img class="img-responsive" src="/leaf-cms-php/images/<?php echo imagePlaceholder($post_image); ?>" alt="/">
                         <hr>
                         <p><?php echo $post_content ?></p>
+                        <!-- <?php mysqli_stmt_free_result($stm); ?> -->
 
                         <hr>
+                        <?php
+
+                        if (isLoggedIn()) {  ?>
+                            <div class="row">
+                                <p class="pull-right">
+                                    <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like'; ?>" href="">
+                                    <span class="<?php echo userLikedThisPost($the_post_id) ? 'glyphicon glyphicon-thumbs-down' : 'glyphicon glyphicon-thumbs-up'; ?>"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="<?php echo userLikedThisPost($the_post_id) ? ' I liked this before' : ' Want to like it?'; ?>"
+                                    ></span><?php echo userLikedThisPost($the_post_id) ? ' Unlike' : ' Like'; ?></a>
+                                </p>
+                            </div>
+                        <?php } else { ?>
+                            <div class="row">
+                                <p class="pull-right">You need to <a href="/leaf-cms-php/login">Login</a> to Like </p>
+                            </div>
+                        <?php } ?>
+
+                        <div class="row">
+                            <p class="pull-right">Like: <?php getPostLikes($the_post_id); ?></p>
+                        </div>
+                        <div class="clearfix"></div>
+
                     <?php } ?>
 
                     <!-- Blog Comments -->
@@ -71,7 +128,7 @@ include("includes/navigation.php");
                                 die('QUERY FAILED' . mysqli_error($connection));
                             }
 
-                            header("Location: post.php?p_id={$the_post_id}");
+                            header("Location: /leaf-cms-php/post/{$the_post_id}");
 
                             $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id ";
                             $update_comment_count = mysqli_query($connection, $query);
@@ -106,7 +163,7 @@ include("includes/navigation.php");
                         $comment_date = $row['comment_date'];
                         $comment_content = $row['comment_content'];
                         $comment_author = $row['comment_author'];
-                    ?>
+                        ?>
 
                         <!-- Comment -->
                         <div class="media">
@@ -139,3 +196,36 @@ include("includes/navigation.php");
     <!-- /.row -->
     <hr>
     <?php include("includes/footer.php"); ?>
+
+    <script>
+        $(document).ready(function() {
+            $("[data-toogle='tooltop']").tooltip();
+
+            const post_id = <?php echo $the_post_id; ?>;
+            const user_id = <?php echo loggedInUserId(); ?>
+
+            $('.like').click(function() {
+                $.ajax({
+                    url: "/leaf-cms-php/post/<?php echo $the_post_id; ?>",
+                    type: 'post',
+                    data: {
+                        'liked': 1,
+                        'post_id': post_id,
+                        'user_id': user_id
+                    }
+                })
+            });
+
+            $('.unlike').click(function() {
+                $.ajax({
+                    url: "/leaf-cms-php/post/<?php echo $the_post_id; ?>",
+                    type: 'post',
+                    data: {
+                        'unliked': 1,
+                        'post_id': post_id,
+                        'user_id': user_id
+                    }
+                })
+            });
+        });
+    </script>

@@ -34,7 +34,9 @@ if (!is_admin($_SESSION['username'])) {
                             break;
 
                         default;
+                            
                             include("includes/view_all_users.php");
+                            
                             break;
                     }
                     ?>

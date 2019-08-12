@@ -127,7 +127,7 @@ if (isset($_GET['unapprove'])) {
 <?php
 
 if (isset($_POST['delete_item'])) {
-    $the_category_id =  escape($_POST['delete_item']);
+    $the_comment_id =  escape($_POST['delete_item']);
     $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
     $delete_query = mysqli_query($connection, $query);
     header('Location:comments.php');

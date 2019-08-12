@@ -2,7 +2,6 @@
 include("includes/db.php"); 
 include("includes/header.php"); 
 include("includes/navigation.php");
-include("./admin/functions.php"); 
 ?>
    
 <!-- Page Content -->
@@ -24,7 +23,7 @@ include("./admin/functions.php");
                 $count = mysqli_num_rows($search_query);
 
                 if($count == 0) {
-                    echo "NO RESULT";
+                    echo "<h1 class='text-center'>No Result</h1>";
                 } else {
             
                 while($row = mysqli_fetch_assoc($search_query)) {
@@ -36,14 +35,15 @@ include("./admin/functions.php");
                     $post_content = $row['post_content']; 
             ?>
             <!-- First Blog Post -->
-            <h2><a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title?></a></h2>
-            <p class="lead">Posted by <?php echo $post_user?></p>
-            <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date?></p>
+            <h2><a class="post-title" href="post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
+            <p class="lead">Posted by: <?php echo $post_user?></p>
+            <p><span class="glyphicon glyphicon-time time-icon"></span> Posted on <?php echo $post_date?></p>
             <hr>
-            <img class="img-responsive" src="images/<?php echo $post_image?>" alt="/">
+            <a href="post.php?p_id=<?php echo $post_id;?>">
+            <img class="img-responsive" src="images/<?php echo imagePlaceholder($post_image)?>" alt="/"></a>
             <hr>
             <p><?php echo $post_content?></p>
-            <a class="btn btn-primary"  href="post.php?p_id=<?php echo $post_id;?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary read-more" href="post/<?php echo $post_id;?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
             <hr>
             

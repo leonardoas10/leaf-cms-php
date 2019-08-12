@@ -45,10 +45,17 @@ setInterval(function() {
 $(document).ready(function() {
     $(".del_link").on('click', function(e) {
         e.preventDefault();
-        var p_id = $(this).attr("rel");
+        const p_id = $(this).attr("rel");
         $(".modal_delete_link").val(p_id);
         $(".modal-body").html("<h4 class='text-center'>Are you sure you want to delete id: " + p_id + "? </h4>");
         $("#myModal").modal('show');
+    });
+    // EDIT BUTTON
+    $(".edit_link").on('click', function(e) {
+        e.preventDefault();
+        const p_id = $(this).attr("rel");
+        $("._id").val(p_id);
+        $("#actions").trigger("submit");
     });
 });
 

@@ -3,7 +3,7 @@ include("includes/db.php");
 include("includes/header.php");
 include("includes/navigation.php"); 
 ?>   
-    <!-- Page Content -->
+<!-- Page Content -->
 <div class="container">
     <div class="row">
         <!-- Blog Entries Column -->
@@ -73,7 +73,7 @@ include("includes/navigation.php");
                 if($i == $page) {
                     echo "<li><a class='active_link' href='/leaf-cms-php/{$i}'>{$i}</a></li>";
                 } else {
-                        echo "<li><a class='inactive_link' href='/leaf-cms-php/{$i}'>{$i}</a></li>";
+                    echo "<li><a class='inactive_link' href='/leaf-cms-php/{$i}'>{$i}</a></li>";
                 }
             }
         ?>

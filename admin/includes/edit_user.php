@@ -4,9 +4,9 @@ ob_start();
 
 if (isset($_GET['edit_user'])) {
     $the_user_id = $_GET['edit_user'];
-
     $query = "SELECT * FROM users WHERE user_id = $the_user_id";
     $select_users = mysqli_query($connection, $query);
+
     while ($row = mysqli_fetch_assoc($select_users)) {
         $user_id = $row['user_id'];
         $username = stripcslashes($row['username']);

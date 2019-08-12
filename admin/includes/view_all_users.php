@@ -64,19 +64,14 @@ if (isset($_POST['checkBoxArray'])) {
                     $select_users = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($select_users)) {
                         $user_id = $row['user_id'];
-                        $username =
-                            stripcslashes($row['username']);
-
-                        $user_firstname =
-                            stripcslashes($row['user_firstname']);
-                        $user_lastname =
-                            stripcslashes($row['user_lastname']);
+                        $username = stripcslashes($row['username']);
+                        $user_firstname = stripcslashes($row['user_firstname']);
+                        $user_lastname = stripcslashes($row['user_lastname']);
                         $user_email = $row['user_email'];
                         $user_image = stripcslashes($row['user_image']);
                         $user_role = $row['user_role'];
                         echo "<tr>";
                         ?>
-
                         <td><input class="checkBoxes" type="checkbox" name='checkBoxArray[]' value='<?php echo $user_id ?>'></td>
                         <?php
                         echo "<td>$user_id</td>";
@@ -88,9 +83,10 @@ if (isset($_POST['checkBoxArray'])) {
                         echo "<td class='links-color'><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
                         echo "<td class='links-color'><a href='users.php?change_to_sub={$user_id}'>Subscriber</a></td>";
                         ?>
-                    <form method="post">
+                    <form method="post" id="actions" action="">
                         <?php
-                        echo "<td><input rel='$user_id' class='btn-xs btn-success submit-buttons' type='submit' name='edit' value='Edit'></td>";
+                        echo "<input type='hidden' class='_id' name='edit' value=''>";
+                        echo "<td><input rel='$user_id' class='btn-xs btn-success submit-buttons edit_link' type='submit' value='Edit'></td>";
                         echo "<td><input rel='$user_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
                         ?>
                     </form>
@@ -114,7 +110,8 @@ if (isset($_GET['change_to_sub'])) {
 }
 
 if (isset($_POST['edit'])) {
-    header("Location:users.php?source=edit_user&edit_user=" . $user_id);
+    $the_user_id =  escape($_POST['edit']);
+    header("Location:users.php?source=edit_user&edit_user=" . $the_user_id);
 }
 
 if (isset($_POST['delete_item'])) {
@@ -123,7 +120,7 @@ if (isset($_POST['delete_item'])) {
             $the_user_id =  escape($_POST['delete_item']);
             $query = "DELETE FROM users WHERE user_id = {$the_user_id} ";
             $delete_query = mysqli_query($connection, $query);
-            header('Location:users.php');
+            header('Location: users.php');
         }
     }
 }

@@ -1,8 +1,5 @@
 <?php 
 include("includes/admin_header.php");
-// require 'vendor/autoload.php'; 
-// $dotenv = Dotenv\Dotenv::create(__DIR__);
-// $dotenv->load();
 ?>
 <div id="wrapper">
     <?php include("includes/admin_navigation.php") ?>
@@ -12,8 +9,10 @@ include("includes/admin_header.php");
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        <?php echo $_SESSION['user_firstname'] . " ";
-                        echo $_SESSION['user_lastname']; ?>
+                        <?php 
+                        echo $_SESSION['user_firstname'] . " ";
+                        echo $_SESSION['user_lastname']; 
+                        ?>
                         <small><?php echo $_SESSION['username']; ?></small>
                     </h1>
                 </div>

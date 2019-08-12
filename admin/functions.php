@@ -1,61 +1,80 @@
 <?php
+// ===== DATABASE HELPERS =====
+
+// MAKE A QUERY CONNECTION
+function query($query) {
+    global $connection;
+    $result = mysqli_query($connection,$query);
+    confirmQuery($result); 
+    return $result;
+}
+//CHECK QUERY
+function confirmQuery($result){
+    global $connection;
+    if (!$result) {
+        die("QUERY FAILED " . mysqli_error($connection));
+    }
+}
 // ESCAPE SQL 
-function escape($string)
-{
+function escape($string) {
     global $connection;
     return mysqli_real_escape_string($connection, trim($string));
 }
 
+function fetchRecords($result) {
+    return mysqli_fetch_array($result);
+}
+
+// ===== END DATABASE HELPERS =====
+
+// ===== AUTHENTICATION HELPERS =====
+
+// VALIDATION OF ROLE STATUS TO ADMIN
+function is_admin(){
+    if(isLoggedIn()) {
+        $result = query("SELECT user_role FROM users WHERE user_id = ".$_SESSION['user_id']. "");
+        $row = fetchRecords($result);
+        if ($row['user_role'] == 'Admin') {
+            return true;
+        } else {
+            return false;
+        }
+    }  
+    return false; 
+}
+
+// ===== END AUTHENTICATION HELPERS =====
+
 function imagePlaceholder($image='') {
-    if(!$image) {
-        return 'leaf-cms-php/images/noplacelike.png';
-    } else {
-        return $image;
-    }
+    return !$image ? 'leaf-cms-php/images/noplacelike.png' : $image;
 }
 
 //SELECT FROM AND COUNT 
-function selectFromCount($table)
-{
-    global $connection;
-    $query = "SELECT * FROM " . $table;
-    $select = mysqli_query($connection, $query);
-    return mysqli_num_rows($select);
+function selectFromCount($table) {
+    $result = query("SELECT * FROM " . $table);
+    return mysqli_num_rows($result);
 }
 //SELECT FROM, COLUMN AND STATUS
-function selectFromColumnStatus($table, $column, $status)
-{
-    global $connection;
-    $query = "SELECT * FROM $table WHERE $column = '$status'";
-    $select_all_column_status = mysqli_query($connection, $query);
-    return mysqli_num_rows($select_all_column_status);
+function selectFromColumnStatus($table, $column, $status) {
+    $result = query("SELECT * FROM $table WHERE $column = '$status'");
+    return mysqli_num_rows($result);
 }
 //SELECT FROM, ROLE AND STATUS
-function selectFromRoleStatus($table, $role, $status)
-{
-    global $connection;
-    $query = "SELECT * FROM $table WHERE $role = '$status'";
-    $select_all_role_status = mysqli_query($connection, $query);
-    return mysqli_num_rows($select_all_role_status);
+function selectFromRoleStatus($table, $role, $status) {
+    $result = query("SELECT * FROM $table WHERE $role = '$status'");
+    return mysqli_num_rows($result);
 }
 //UPDATE USER ROLE 
-function updateUserRole($role, $id)
-{
-    global $connection;
-    $query = "UPDATE users SET user_role = '{$role}' WHERE user_id = $id ";
-    return mysqli_query($connection, $query);
+function updateUserRole($role, $id) {
+    return query("UPDATE users SET user_role = '{$role}' WHERE user_id = $id ");
 }
 //VALIDATE USER ONLINE OR NOT
-function users_online()
-{
-
+function users_online() {
     if (isset($_GET['onlineusers'])) {
-
         global $connection;
         if (!$connection) {
             session_start();
             include("../includes/db.php");
-
 
             $session = session_id();
             $time = time();
@@ -79,18 +98,8 @@ function users_online()
 }
 
 users_online();
-
-//CHECK QUERY
-function confirmQuery($result)
-{
-    global $connection;
-    if (!$result) {
-        die("QUERY FAILED " . mysqli_error($connection));
-    }
-}
 //INSERT CATEGORY
-function insert_categories()
-{
+function insert_categories() {
     global $connection;
     if (isset($_POST['submit'])) {
         $cat_title = ucwords($_POST['cat_title']);
@@ -110,8 +119,7 @@ function insert_categories()
     }
 }
 //CLONE CATEGORY
-function cloneCategories()
-{
+function cloneCategories() {
     global $connection;
     if (isset($_POST['checkBoxArray'])) {
 
@@ -146,53 +154,20 @@ function cloneCategories()
     }
 }
 
-// VALIDATION OF ROLE STATUS TO ADMIN
-function is_admin($username)
-{
-    global $connection;
-    $query = "SELECT user_role FROM users WHERE username = '$username'";
-    $result =  mysqli_query($connection, $query);
-    confirmQuery($result);
-    $row = mysqli_fetch_array($result);
-    if ($row['user_role'] == 'Admin') {
-        return true;
-    } else {
-        return false;
-    }
-}
-// EXIST USER
-function username_exists($username)
-{
-    global $connection;
-    $query = "SELECT username FROM users WHERE username = '$username'";
-    $result =  mysqli_query($connection, $query);
-    confirmQuery($result);
 
-    if (mysqli_num_rows($result) > 0) {
-        return true;
-    } else {
-        return false;
-    }
+// EXIST USER
+function username_exists($username){
+    $result = query("SELECT username FROM users WHERE username = '$username'");
+    return mysqli_num_rows($result) > 0;
 }
 // EXIST EMAIL
-function email_exists($email)
-{
-    global $connection;
-    $query = "SELECT username FROM users WHERE user_email = '$email'";
-    $result =  mysqli_query($connection, $query);
-    confirmQuery($result);
-
-    if (mysqli_num_rows($result) > 0) {
-        return true;
-    } else {
-        return false;
-    }
+function email_exists($email){
+    $result = query("SELECT username FROM users WHERE user_email = '$email'");
+    return mysqli_num_rows($result) > 0;
 }
 //REGISTER A USER
-function registration_user($firstname, $lastname, $username, $email, $password)
-{
+function registration_user($firstname, $lastname, $username, $email, $password){
     global $connection;
-
     $firstname = escape(ucwords($firstname));
     $lastname = escape(ucwords($lastname));
     $username = escape($username);
@@ -206,41 +181,23 @@ function registration_user($firstname, $lastname, $username, $email, $password)
     confirmQuery($newUser);
 }
 
-function ifItIsMethod($method = null)
-{
-    if ($_SERVER['REQUEST_METHOD'] == strtoupper($method)) {
-        return true;
-    }
-    return false;
+function ifItIsMethod($method = null) {
+    return $_SERVER['REQUEST_METHOD'] == strtoupper($method);
 }
-
-function isLoggedIn()
-{
-    if (isset($_SESSION['user_role'])) {
-        return true;
-    }
-    return false;
+// IF USER IS LOG IN 
+function isLoggedIn() {
+    return isset($_SESSION['user_role']);
 }
-function checkIfUserIsLoggedInAndRedirect($redirectLocation = null)
-{
-    if (isLoggedIn()) {
-        header(`Location: $redirectLocation `);
-    }
+// IF USER IS LOG IN AND REDIRECT
+function checkIfUserIsLoggedInAndRedirect($redirectLocation = null) {
+    return isLoggedIn() ? header(`Location: $redirectLocation `) : false;
 }
+// LOG IN USER
+function login_user($username, $password) {
+    $result = query("SELECT * FROM users WHERE username = '{$username}'");
 
-function login_user($username, $password)
-{
-    global $connection;
-
-    $query = "SELECT * FROM users WHERE username = '{$username}'";
-
-    $select_user_query = mysqli_query($connection, $query);
-
-    if (!$select_user_query) {
-        die("MYSQL ERROR " . mysqli_error($connection));
-    }
-
-    while ($row = mysqli_fetch_array($select_user_query)) {
+    while ($row = mysqli_fetch_array($result)) {
+        $db_user_id = $row['user_id'];
         $db_username = $row['username'];
         $db_user_password = $row['user_password'];
         $db_user_firstname = $row['user_firstname'];
@@ -248,7 +205,7 @@ function login_user($username, $password)
         $db_user_role = $row['user_role'];
 
         if (password_verify($password, $db_user_password)) {
-
+            $_SESSION['user_id'] = $db_user_id;
             $_SESSION['username'] = $db_username;
             $_SESSION['user_firstname'] = $db_user_firstname;
             $_SESSION['user_lastname'] = $db_user_lastname;
@@ -260,4 +217,23 @@ function login_user($username, $password)
         }
     }
     return true;
+}
+// USER ID THAT ARE LOG IN
+function loggedInUserId() {
+    if(isLoggedIn()) {
+       $result = query("SELECT * FROM users WHERE username ='". $_SESSION['username'] . "'"); 
+       $user = mysqli_fetch_array($result);
+       return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
+    }
+    return false;
+}
+// USERS THAT LIKE THE POST
+function userLikedThisPost($post_id = '') {
+    $result = query("SELECT * FROM likes WHERE user_id=" .loggedInUserId() . " AND post_id ={$post_id}");
+    return mysqli_num_rows($result) >= 1 ? true : false;
+}
+// TOTAL LIKES 
+function getPostLikes($post_id){
+    $result = query("SELECT * FROM likes WHERE post_id=$post_id");
+    echo mysqli_num_rows($result);
 }
