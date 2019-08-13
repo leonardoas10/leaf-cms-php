@@ -27,9 +27,11 @@ function fetchRecords($result) {
 
 // ===== END DATABASE HELPERS =====
 
+
+
 // ===== AUTHENTICATION HELPERS =====
 
-// VALIDATION OF ROLE STATUS TO ADMIN
+// VALIDATION THE ROLE STATUS OF ADMIN
 function is_admin(){
     if(isLoggedIn()) {
         $result = query("SELECT user_role FROM users WHERE user_id = ".$_SESSION['user_id']. "");
@@ -42,9 +44,66 @@ function is_admin(){
     }  
     return false; 
 }
+// EXIST USER
+function username_exists($username){
+    $result = query("SELECT username FROM users WHERE username = '$username'");
+    return mysqli_num_rows($result) > 0;
+}
+// EXIST EMAIL
+function email_exists($email){
+    $result = query("SELECT username FROM users WHERE user_email = '$email'");
+    return mysqli_num_rows($result) > 0;
+}
+// IF USER IS LOG IN 
+function isLoggedIn() {
+    return isset($_SESSION['user_role']);
+}
+// IF USER IS LOG IN AND REDIRECT
+function checkIfUserIsLoggedInAndRedirect($redirectLocation = null) {
+    return isLoggedIn() ? header(`Location: $redirectLocation `) : false;
+}
+// USER ID THAT ARE LOG IN
+function loggedInUserId() {
+    if(isLoggedIn()) {
+       $result = query("SELECT * FROM users WHERE username ='". $_SESSION['username'] . "'"); 
+       $user = mysqli_fetch_array($result);
+       return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
+    }
+    return false;
+}
+// HEADER METHOD 
+function ifItIsMethod($method = null) {
+    return $_SERVER['REQUEST_METHOD'] == strtoupper($method);
+}
 
 // ===== END AUTHENTICATION HELPERS =====
 
+
+
+// ===== 'MY DATA'(index.php) HELPERS =====
+
+function get_all_user_posts() {
+    return query("SELECT * FROM posts WHERE user_id=".loggedInUserId()."" );
+}
+
+function get_all_user_comments() {
+    return query("SELECT * FROM posts INNER JOIN comments ON posts.post_id = comments.comment_post_id WHERE user_id=".loggedInUserId()."");
+}
+
+function get_all_user_categories() {
+    return query("SELECT * FROM categories  WHERE user_id=".loggedInUserId()."");
+}
+
+function count_records($result) {
+    return mysqli_num_rows($result);
+}
+
+// ===== END MY DATA HELPERS =====
+
+
+
+// ===== ANOTHER HELPERS =====
+// DEFAULT IMAGE
 function imagePlaceholder($image='') {
     return !$image ? 'leaf-cms-php/images/noplacelike.png' : $image;
 }
@@ -102,13 +161,14 @@ users_online();
 function insert_categories() {
     global $connection;
     if (isset($_POST['submit'])) {
+        $user_id = $_SESSION['user_id'];
         $cat_title = ucwords($_POST['cat_title']);
         if ($cat_title == "" || empty($cat_title)) {
             echo "this field shouldn´t be empty";
         } else {
-            $stmt = mysqli_prepare($connection, "INSERT INTO categories (cat_title) VALUES(?)");
+            $stmt = mysqli_prepare($connection, "INSERT INTO categories (user_id, cat_title) VALUES(?, ?)");
 
-            mysqli_stmt_bind_param($stmt, "s", $cat_title);
+            mysqli_stmt_bind_param($stmt, "is", $user_id, $cat_title);
             mysqli_stmt_execute($stmt);
 
             if (!$stmt) {
@@ -118,53 +178,8 @@ function insert_categories() {
         header("Location: categories.php");
     }
 }
-//CLONE CATEGORY
-function cloneCategories() {
-    global $connection;
-    if (isset($_POST['checkBoxArray'])) {
-
-        foreach ($_POST['checkBoxArray'] as $postValueId) {
-
-            $bulk_options = $_POST['bulk_options'];
-
-            switch ($bulk_options) {
-                case 'Delete':
-                    $delete_query = "DELETE FROM categories WHERE cat_id = {$postValueId}";
-
-                    $update_to_delete_status = mysqli_query($connection, $delete_query);
-                    confirmQuery($update_to_delete_status);
-                    break;
-                case 'Clone':
-                    $query = "SELECT * FROM categories WHERE cat_id = {$postValueId} ";
-                    $select_post_query = mysqli_query($connection, $query);
-
-                    $row = mysqli_fetch_assoc($select_post_query);
-                    $cat_title         = mysqli_real_escape_string($connection, $row['cat_title']);
 
 
-                    $query = "INSERT INTO categories(cat_title) VALUES ('{$cat_title}') ";
-                    $clone_post_query = mysqli_query($connection, $query);
-
-                    if (!$clone_post_query) {
-                        die("Error MYSQL " . mysqli_error($connection));
-                    }
-                    break;
-            }
-        }
-    }
-}
-
-
-// EXIST USER
-function username_exists($username){
-    $result = query("SELECT username FROM users WHERE username = '$username'");
-    return mysqli_num_rows($result) > 0;
-}
-// EXIST EMAIL
-function email_exists($email){
-    $result = query("SELECT username FROM users WHERE user_email = '$email'");
-    return mysqli_num_rows($result) > 0;
-}
 //REGISTER A USER
 function registration_user($firstname, $lastname, $username, $email, $password){
     global $connection;
@@ -181,17 +196,7 @@ function registration_user($firstname, $lastname, $username, $email, $password){
     confirmQuery($newUser);
 }
 
-function ifItIsMethod($method = null) {
-    return $_SERVER['REQUEST_METHOD'] == strtoupper($method);
-}
-// IF USER IS LOG IN 
-function isLoggedIn() {
-    return isset($_SESSION['user_role']);
-}
-// IF USER IS LOG IN AND REDIRECT
-function checkIfUserIsLoggedInAndRedirect($redirectLocation = null) {
-    return isLoggedIn() ? header(`Location: $redirectLocation `) : false;
-}
+
 // LOG IN USER
 function login_user($username, $password) {
     $result = query("SELECT * FROM users WHERE username = '{$username}'");
@@ -218,15 +223,7 @@ function login_user($username, $password) {
     }
     return true;
 }
-// USER ID THAT ARE LOG IN
-function loggedInUserId() {
-    if(isLoggedIn()) {
-       $result = query("SELECT * FROM users WHERE username ='". $_SESSION['username'] . "'"); 
-       $user = mysqli_fetch_array($result);
-       return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
-    }
-    return false;
-}
+
 // USERS THAT LIKE THE POST
 function userLikedThisPost($post_id = '') {
     $result = query("SELECT * FROM likes WHERE user_id=" .loggedInUserId() . " AND post_id ={$post_id}");
@@ -237,3 +234,6 @@ function getPostLikes($post_id){
     $result = query("SELECT * FROM likes WHERE post_id=$post_id");
     echo mysqli_num_rows($result);
 }
+
+
+

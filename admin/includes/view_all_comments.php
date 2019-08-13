@@ -8,23 +8,34 @@ if (isset($_POST['checkBoxArray'])) {
 
         switch ($bulk_options) {
             case 'Approved':
-                $query = "UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}";
-
-                $update_to_approved_status = mysqli_query($connection, $query);
+                qyery("UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}");
                 break;
             case 'Unapproved':
-                $query = "UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}";
-
-                $update_to_unapproved_status = mysqli_query($connection, $query);
+                query("UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}");
                 break;
             case 'Delete':
-                $delete_query = "DELETE FROM comments WHERE comment_id = {$postValueId}";
-
-                $update_to_delete_status = mysqli_query($connection, $delete_query);
-                confirmQuery($update_to_delete_status);
+                query("DELETE FROM comments WHERE comment_id = {$postValueId}");
                 break;
         }
     }
+}
+
+if (isset($_GET['approve'])) {
+    $the_comment_id = $_GET['approve'];
+    query("UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $the_comment_id ");
+    header("Location: comments.php");
+}
+
+if (isset($_GET['unapprove'])) {
+    $the_comment_id = $_GET['unapprove'];
+    query("UPDATE comments SET comment_status = 'Unapproved' WHERE comment_id = $the_comment_id ");
+    header("Location: comments.php");
+}
+
+if (isset($_POST['delete_item'])) {
+    $the_comment_id =  escape($_POST['delete_item']);
+    query("DELETE FROM comments WHERE comment_id = {$the_comment_id}");
+    header('Location:comments.php');
 }
 ?>
 
@@ -60,19 +71,15 @@ if (isset($_POST['checkBoxArray'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $query = 'SELECT * FROM comments';
-                    $select_comments = mysqli_query($connection, $query);
-                    while ($row = mysqli_fetch_assoc($select_comments)) {
+                    $result = query('SELECT * FROM comments');
+                    while ($row = mysqli_fetch_assoc($result)) {
                         $comment_id = $row['comment_id'];
-                        $comment_post_id =
-                            stripcslashes($row['comment_post_id']);
-                        $comment_author =
-                            stripcslashes($row['comment_author']);
+                        $comment_post_id = stripcslashes($row['comment_post_id']);
+                        $comment_author = stripcslashes($row['comment_author']);
                         $comment_email = $row['comment_email'];
                         $comment_content = stripcslashes($row['comment_content']);
                         $comment_status = $row['comment_status'];
                         $comment_date = stripcslashes($row['comment_date']);
-
                         echo "<tr>";
                     ?>
                         <td><input class="checkBoxes" type="checkbox" name='checkBoxArray[]' value='<?php echo $comment_id ?>'></td>
@@ -83,9 +90,8 @@ if (isset($_POST['checkBoxArray'])) {
                         echo "<td>$comment_email</td>";
                         echo "<td>$comment_status</td>";
 
-                        $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
-                        $select_post_id_query = mysqli_query($connection, $query);
-                        while ($row = mysqli_fetch_assoc($select_post_id_query)) {
+                        $result = query("SELECT * FROM posts WHERE post_id = $comment_post_id");
+                        while ($row = mysqli_fetch_assoc($result)) {
                             $post_id = $row['post_id'];
                             $post_title = $row['post_title'];
 
@@ -108,28 +114,3 @@ if (isset($_POST['checkBoxArray'])) {
             </table>
         </table>
 </form>
-<?php
-if (isset($_GET['approve'])) {
-    $the_comment_id = $_GET['approve'];
-    $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $the_comment_id ";
-    $approve_comment_query = mysqli_query($connection, $query);
-    header("Location: comments.php");
-}
-?>
-<?php
-if (isset($_GET['unapprove'])) {
-    $the_comment_id = $_GET['unapprove'];
-    $query = "UPDATE comments SET comment_status = 'Unapproved' WHERE comment_id = $the_comment_id ";
-    $unapprove_comment_query = mysqli_query($connection, $query);
-    header("Location: comments.php");
-}
-?>
-<?php
-
-if (isset($_POST['delete_item'])) {
-    $the_comment_id =  escape($_POST['delete_item']);
-    $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
-    $delete_query = mysqli_query($connection, $query);
-    header('Location:comments.php');
-}
-?>

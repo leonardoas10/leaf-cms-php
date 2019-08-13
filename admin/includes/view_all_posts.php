@@ -66,6 +66,18 @@ if (isset($_POST['checkBoxArray'])) {
         }
     }
 }
+
+if (isset($_POST['edit'])) {
+    $the_post_id =  escape($_POST['edit']);
+    header("Location:posts.php?source=edit_post&p_id=" . $the_post_id);
+}
+
+if (isset($_POST['delete_item'])) {
+    $the_post_id =  escape($_POST['delete_item']);
+    $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
+    $delete_query = mysqli_query($connection, $query);
+    header('Location:posts.php');
+}
 ?>
 <form action="" method="post">
     <table class="table table-bordered table-hover tr-background">
@@ -134,38 +146,22 @@ if (isset($_POST['checkBoxArray'])) {
                     echo "<td>$post_date</td>";
                     echo "<td class='links-color'><a href='../post/{$post_id}'>View Post   </a></td>";
 
-                    $query = "SELECT * FROM comments WHERE comment_post_id = {$post_id}";
-                    $comment_count_query = mysqli_query($connection, $query);
-                    $count_comment = mysqli_num_rows($comment_count_query);
+                    $result = query("SELECT * FROM comments WHERE comment_post_id = {$post_id}");
+                    $count_comment = mysqli_num_rows($result);
 
                     echo "<td class='links-color'><a href='post_comments.php?id=$post_id'>$count_comment</a></td>";
-                    ?>
-                    <form method="post" id="actions" >
+                    ?>       
+</form>
+<form method="post" id="actions" >
                     <?php
                         echo "<input type='hidden' class='_id' name='edit' value=''>";
                         echo "<td><input rel='$post_id' class='btn-xs btn-success submit-buttons edit_link' type='submit' name='edit' value='Edit'></td>";
                         echo "<td><input rel='$post_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
                     ?>
-                    </form>
-                    <?php 
-
-                    echo "</tr>";
-                }
-                    ?>
-            </tbody>
-        </div>
-    </table>
 </form>
+<?php echo "</tr>"; } ?>
+        </tbody>
+    </div>
+</table>
 
-<?php
-if (isset($_POST['edit'])) {
-    $the_post_id =  escape($_POST['edit']);
-    header("Location:posts.php?source=edit_post&p_id=" . $the_post_id);
-}
-if (isset($_POST['delete_item'])) {
-    $the_post_id =  escape($_POST['delete_item']);
-    $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
-    $delete_query = mysqli_query($connection, $query);
-    header('Location:posts.php');
-}
-?>
+

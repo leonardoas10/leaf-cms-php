@@ -43,12 +43,8 @@ if (!is_admin($_SESSION['username'])) {
                 </div>
             </div>
             <!-- /.row -->
-
         </div>
         <!-- /.container-fluid -->
-
     </div>
-
     <!-- /#page-wrapper -->
-
     <?php include("includes/admin_footer.php") ?>

@@ -28,12 +28,10 @@ include("includes/navigation.php");
                 $category = $_GET['category'];
 
                 if (is_admin($_SESSION['username'])) {
-                    $stm1 = mysqli_prepare($connection, "SELECT post_id, post_title, 
-                        post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ?");
+                    $stm1 = mysqli_prepare($connection, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ?");
 
                 } else {
-                    $stm2 = mysqli_prepare($connection, "SELECT post_id, post_title, 
-                        post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? AND post_status = ?");
+                    $stm2 = mysqli_prepare($connection, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? AND post_status = ?");
 
                     $published = "Published";
                 }
@@ -60,17 +58,14 @@ include("includes/navigation.php");
             if (mysqli_stmt_num_rows($stm) === 0) {
                 echo "<h1 class='text-center'>No Post Available</h1>";
             }
-           
 
-            $stm3 = mysqli_prepare($connection, "SELECT post_id, post_title, 
-                        post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? LIMIT  $page_1,  $per_page");
+            $stm3 = mysqli_prepare($connection, "SELECT post_id, post_title, post_user, post_date, post_image, post_content FROM posts WHERE post_category_id = ? LIMIT  $page_1,  $per_page");
 
             mysqli_stmt_bind_param($stm3, "i", $category);
             mysqli_stmt_execute($stm3);
             mysqli_stmt_bind_result($stm3, $post_id, $post_title, $post_user, $post_date, $post_image, $post_content);
 
                 while (mysqli_stmt_fetch($stm3)) {
-                    
                     ?>
                     <!-- First Blog Post -->
                     <h2><a class="post-title" href="/leaf-cms-php/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>

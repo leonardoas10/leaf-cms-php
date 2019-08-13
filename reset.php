@@ -39,9 +39,7 @@ if ($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM
 }
 
 ?>
-
 <!-- Navigation -->
-
 <?php include "includes/navigation.php"; ?>
 
 <div class="container">

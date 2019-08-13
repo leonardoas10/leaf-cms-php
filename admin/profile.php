@@ -9,7 +9,6 @@
         $select_user_profile_query = mysqli_query($connection, $query);
 
         while ($row = mysqli_fetch_array($select_user_profile_query)) {
-
             $user_id = $row['user_id'];
             $username =   stripcslashes($row['username']);
             $user_password = stripcslashes($row['user_password']);
@@ -21,7 +20,6 @@
     }
 
     if (isset($_POST{'edit_user'})) {
-
         $user_firstname = escape($_POST['user_firstname']);
         $user_lastname = escape($_POST['user_lastname']);
         $username = escape($_POST['username']);
@@ -30,7 +28,6 @@
         //        move_uploaded_file($post_image_temp, "../images/$post_image");
 
         $query = "UPDATE users SET user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}',  username = '{$username}', user_email = '{$user_email}', user_password = '{$user_password}' WHERE username = '{$username}'";
-
         $edit_user_query = mysqli_query($connection, $query);
         confirmQuery($edit_user_query);
 

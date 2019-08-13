@@ -1,7 +1,6 @@
 <?php 
 ob_start();
 
-
 if (isset($_GET['edit_user'])) {
     $the_user_id = $_GET['edit_user'];
     $query = "SELECT * FROM users WHERE user_id = $the_user_id";

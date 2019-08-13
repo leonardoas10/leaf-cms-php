@@ -5,32 +5,28 @@ include("includes/header.php");
 include("includes/navigation.php");
 
 if (isset($_POST['liked'])) {
-
     $post_id = $_POST['post_id'];
     $user_id = $_POST['user_id'];
-    // 1. FETCHING POST
 
-    $query = "SELECT * FROM posts WHERE post_id=$post_id";
-    $postResult = mysqli_query($connection, $query);
-    $post = mysqli_fetch_array($postResult);
+    // 1. FETCHING POST
+    $result = query("SELECT * FROM posts WHERE post_id=$post_id");
+    $post = mysqli_fetch_array($result);
     $likes = $post['post_likes'];
 
     // 2. UPDATE POST
     mysqli_query($connection, "UPDATE posts SET post_likes='{$likes}'+1 WHERE post_id='{$post_id}'");
+
     // 3. CREATE LIKES FOR POST
     mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id)");
 }
 if (isset($_POST['unliked'])) {
-
     $post_id = $_POST['post_id'];
     $user_id = $_POST['user_id'];
+
     // 1. FETCHING POST
-
-    $query = "SELECT * FROM posts WHERE post_id=$post_id";
-    $postResult = mysqli_query($connection, $query);
-    $post = mysqli_fetch_array($postResult);
+    $result = query("SELECT * FROM posts WHERE post_id=$post_id");
+    $post = mysqli_fetch_array($result);
     $likes = $post['post_likes'];
-
     mysqli_query($connection, "DELETE FROM likes WHERE post_id=$post_id AND user_id=$user_id");
     // 2. UPDATE POST
     mysqli_query($connection, "UPDATE posts SET post_likes='{$likes}'-1 WHERE post_id='{$post_id}'");
@@ -45,8 +41,7 @@ if (isset($_POST['unliked'])) {
             <?php
             if (isset($_GET['p_id'])) {
                 $the_post_id = $_GET['p_id'];
-                $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $the_post_id";
-                $view_connection = mysqli_query($connection, $view_query);
+                $result = query("UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $the_post_id");
 
                 if (!$view_connection) {
                     die("Query Fail " . mysqli_error($connection));
@@ -83,9 +78,7 @@ if (isset($_POST['unliked'])) {
                         <!-- <?php mysqli_stmt_free_result($stm); ?> -->
 
                         <hr>
-                        <?php
-
-                        if (isLoggedIn()) {  ?>
+                        <?php if (isLoggedIn()) {  ?>
                             <div class="row">
                                 <p class="pull-right">
                                     <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like'; ?>" href="">
@@ -112,7 +105,6 @@ if (isset($_POST['unliked'])) {
                     <!-- Blog Comments -->
                     <?php
                     if (isset($_POST['create_comment'])) {
-
                         $the_post_id = $_GET['p_id'];
                         $comment_author = escape(ucwords($_POST['comment_author']));
                         $comment_email = escape($_POST['comment_email']);
@@ -120,18 +112,11 @@ if (isset($_POST['unliked'])) {
 
                         if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
 
-                            $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($the_post_id, '{$comment_author}','{$comment_email}','{$comment_content}', 'Unapproved', now())";
-
-                            $create_comment_query = mysqli_query($connection, $query);
-
-                            if (!$create_comment_query) {
-                                die('QUERY FAILED' . mysqli_error($connection));
-                            }
+                            $result = query("INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES ($the_post_id, '{$comment_author}','{$comment_email}','{$comment_content}', 'Unapproved', now())");
 
                             header("Location: /leaf-cms-php/post/{$the_post_id}");
 
-                            $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id ";
-                            $update_comment_count = mysqli_query($connection, $query);
+                            $result = query("UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id ");
                         }
                     }
                     ?>
@@ -156,15 +141,13 @@ if (isset($_POST['unliked'])) {
                     </div>
 
                     <?php
-                    $query = "SELECT * FROM comments WHERE comment_post_id = {$the_post_id} AND comment_status = 'Approved' ORDER BY comment_id DESC ";
-                    $approve_comment_query = mysqli_query($connection, $query);
+                    $result = query("SELECT * FROM comments WHERE comment_post_id = {$the_post_id} AND comment_status = 'Approved' ORDER BY comment_id DESC ");
 
-                    while ($row = mysqli_fetch_array($approve_comment_query)) {
+                    while ($row = mysqli_fetch_array($result)) {
                         $comment_date = $row['comment_date'];
                         $comment_content = $row['comment_content'];
                         $comment_author = $row['comment_author'];
                         ?>
-
                         <!-- Comment -->
                         <div class="media">
                             <a class="pull-left" href="#">
@@ -179,7 +162,6 @@ if (isset($_POST['unliked'])) {
                                 <!-- End Nested Comment -->
                             </div>
                         </div>
-
                     <?php
 
                     }
@@ -197,7 +179,7 @@ if (isset($_POST['unliked'])) {
     <hr>
     <?php include("includes/footer.php"); ?>
 
-    <script>
+    <script> // TODO
         $(document).ready(function() {
             $("[data-toogle='tooltop']").tooltip();
 

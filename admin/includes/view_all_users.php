@@ -31,6 +31,32 @@ if (isset($_POST['checkBoxArray'])) {
         }
     }
 }
+
+if (isset($_GET['change_to_admin'])) {
+    updateUserRole('Admin', $_GET['change_to_admin'] );
+    header("Location: users.php");
+}
+
+if (isset($_GET['change_to_sub'])) {
+    updateUserRole('Subscriber', $_GET['change_to_sub'] );
+    header("Location: users.php");
+}
+
+if (isset($_POST['edit'])) {
+    $the_user_id =  escape($_POST['edit']);
+    header("Location:users.php?source=edit_user&edit_user=" . $the_user_id);
+}
+
+if (isset($_POST['delete_item'])) {
+    if (isset($_SESSION['user_role'])) {
+        if ($_SESSION['user_role'] == 'Admin') {
+            $the_user_id =  escape($_POST['delete_item']);
+            $query = "DELETE FROM users WHERE user_id = {$the_user_id} ";
+            $delete_query = mysqli_query($connection, $query);
+            header('Location: users.php');
+        }
+    }
+}
 ?>
 <form action="" method="post">
     <table class="table table-bordered table-hover">
@@ -83,45 +109,14 @@ if (isset($_POST['checkBoxArray'])) {
                         echo "<td class='links-color'><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
                         echo "<td class='links-color'><a href='users.php?change_to_sub={$user_id}'>Subscriber</a></td>";
                         ?>
-                    <form method="post" id="actions" action="">
+</form>
+<form method="post" id="actions">
                         <?php
                         echo "<input type='hidden' class='_id' name='edit' value=''>";
                         echo "<td><input rel='$user_id' class='btn-xs btn-success submit-buttons edit_link' type='submit' value='Edit'></td>";
                         echo "<td><input rel='$user_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
-                        ?>
-                    </form>
-                    <?php
-                        echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>        
 </form>
-
-<?php
-if (isset($_GET['change_to_admin'])) {
-    updateUserRole('Admin', $_GET['change_to_admin'] );
-    header("Location: users.php");
-}
-
-if (isset($_GET['change_to_sub'])) {
-    updateUserRole('Subscriber', $_GET['change_to_sub'] );
-    header("Location: users.php");
-}
-
-if (isset($_POST['edit'])) {
-    $the_user_id =  escape($_POST['edit']);
-    header("Location:users.php?source=edit_user&edit_user=" . $the_user_id);
-}
-
-if (isset($_POST['delete_item'])) {
-    if (isset($_SESSION['user_role'])) {
-        if ($_SESSION['user_role'] == 'Admin') {
-            $the_user_id =  escape($_POST['delete_item']);
-            $query = "DELETE FROM users WHERE user_id = {$the_user_id} ";
-            $delete_query = mysqli_query($connection, $query);
-            header('Location: users.php');
-        }
-    }
-}
-?>
+        <?php echo "</tr>"; }?>
+    </tbody>
+</table>

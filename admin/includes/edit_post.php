@@ -3,9 +3,8 @@ ob_start();
 
 if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
-    $query = "SELECT * FROM posts WHERE post_id = $the_post_id";
-    $select_posts_by_id = mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_assoc($select_posts_by_id)) {
+    $result = query("SELECT * FROM posts WHERE post_id = $the_post_id");
+    while ($row = mysqli_fetch_assoc($result)) {
         $post_id = $row['post_id'];
         $post_user = stripcslashes($row['post_user']);
         $post_title =  stripcslashes($row['post_title']);
@@ -20,20 +19,15 @@ if (isset($_GET['p_id'])) {
 }
 
 if (isset($_POST['update_post'])) {
-    $post_user = mysqli_real_escape_string($connection, $_POST['post_user']);
-    $post_title = mysqli_real_escape_string($connection, $_POST['post_title']);
-    $post_category_id = mysqli_real_escape_string($connection, $_POST['post_category_id']);
-    $post_status = mysqli_real_escape_string($connection, ucwords($_POST['post_status']));
-    $post_tags = mysqli_real_escape_string($connection, ucwords($_POST['post_tags']));
-    $post_content = mysqli_real_escape_string($connection, $_POST['post_content']);
+    $post_user = escape($_POST['post_user']);
+    $post_title = escape($_POST['post_title']);
+    $post_category_id = escape($_POST['post_category_id']);
+    $post_status = escape(ucwords($_POST['post_status']));
+    $post_tags = escape(ucwords($_POST['post_tags']));
+    $post_content = escape($_POST['post_content']);
 
-    $query = "UPDATE posts SET post_title = '{$post_title}', post_user = '{$post_user}', post_category_id = {$post_category_id}, post_status = '{$post_status}', post_tags = '{$post_tags}', post_content = '{$post_content}' WHERE post_id = {$the_post_id}";
-
-    $update_post = mysqli_query($connection, $query);
-    confirmQuery($update_post);
-
-    $query_reset_views_count = "UPDATE posts SET post_views_count = 0 WHERE post_id = {$the_post_id}";
-    mysqli_query($connection, $query_reset_views_count);
+    query("UPDATE posts SET post_title = '{$post_title}', post_user = '{$post_user}', post_category_id = {$post_category_id}, post_status = '{$post_status}', post_tags = '{$post_tags}', post_content = '{$post_content}' WHERE post_id = {$the_post_id}");
+    query("UPDATE posts SET post_views_count = 0 WHERE post_id = {$the_post_id}");
 
     header("Location: posts.php?updated&p_id={$the_post_id}");
 }

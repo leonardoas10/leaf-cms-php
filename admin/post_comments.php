@@ -1,9 +1,7 @@
 <?php ob_start(); ?>
 <?php include("includes/admin_header.php") ?>
 <div id="wrapper">
-
     <?php include("includes/admin_navigation.php") ?>
-
     <div id="page-wrapper">
         <div class="container-fluid">
             <!-- Page Heading -->
@@ -31,14 +29,11 @@
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM comments WHERE comment_post_id =" . mysqli_real_escape_string($connection, $_GET['id']);
-                            $select_comments = mysqli_query($connection, $query);
-                            while ($row = mysqli_fetch_assoc($select_comments)) {
+                            $result = query("SELECT * FROM comments WHERE comment_post_id =" . escape($_GET['id']));
+                            while ($row = mysqli_fetch_assoc($result)) {
                                 $comment_id = $row['comment_id'];
-                                $comment_post_id =
-                                    stripcslashes($row['comment_post_id']);
-                                $comment_author =
-                                    stripcslashes($row['comment_author']);
+                                $comment_post_id = stripcslashes($row['comment_post_id']);
+                                $comment_author = stripcslashes($row['comment_author']);
                                 $comment_email = $row['comment_email'];
                                 $comment_content = stripcslashes($row['comment_content']);
                                 $comment_status = $row['comment_status'];
@@ -51,16 +46,14 @@
                                 echo "<td>$comment_email</td>";
                                 echo "<td>$comment_status</td>";
 
-                                $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
+                                $result = query("SELECT * FROM posts WHERE post_id = $comment_post_id");
 
-                                $select_post_id_query = mysqli_query($connection, $query);
-                                while ($row = mysqli_fetch_assoc($select_post_id_query)) {
+                                while ($row = mysqli_fetch_assoc($result)) {
                                     $post_id = $row['post_id'];
                                     $post_title = $row['post_title'];
 
                                     echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
                                 }
-
                                 echo "<td>$comment_date</td>";
                                 echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
                                 echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
@@ -70,7 +63,6 @@
                             ?>
                         </tbody>
                     </table>
-
                     <?php
                     if (isset($_GET['approve'])) {
                         $the_comment_id = $_GET['approve'];
@@ -78,16 +70,12 @@
                         $approve_comment_query = mysqli_query($connection, $query);
                         header("Location: comments.php");
                     }
-                    ?>
-                    <?php
                     if (isset($_GET['unapprove'])) {
                         $the_comment_id = $_GET['unapprove'];
                         $query = "UPDATE comments SET comment_status = 'Unapproved' WHERE comment_id = $the_comment_id ";
                         $unapprove_comment_query = mysqli_query($connection, $query);
                         header("Location: comments.php");
                     }
-                    ?>
-                    <?php
                     if (isset($_GET['delete'])) {
                         $the_comment_id = $_GET['delete'];
                         $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
@@ -95,17 +83,11 @@
                         header("Location: post_comments.php?id=" . $_GET['id'] . "");
                     }
                     ?>
-
-
                 </div>
             </div>
             <!-- /.row -->
-
         </div>
         <!-- /.container-fluid -->
-
     </div>
-
     <!-- /#page-wrapper -->
-
     <?php include("includes/admin_footer.php") ?>

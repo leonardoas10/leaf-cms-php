@@ -10,23 +10,16 @@ include("includes/navigation.php");
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             <?php
-
             if(isset($_POST['submit'])) {
                 $search = escape($_POST['search']);
-                $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' ";
-                $search_query = mysqli_query($connection, $query);
-                
-                if(!$search_query) {
-                    die("QUERT FAILED" . mysqli_error($connection));
-                }
-
-                $count = mysqli_num_rows($search_query);
+                $result = query("SELECT * FROM posts WHERE post_tags LIKE '%$search%' ");
+                $count = mysqli_num_rows($result);
 
                 if($count == 0) {
                     echo "<h1 class='text-center'>No Result</h1>";
                 } else {
             
-                while($row = mysqli_fetch_assoc($search_query)) {
+                while($row = mysqli_fetch_assoc($result)) {
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
                     $post_user = $row['post_user'];
@@ -53,8 +46,7 @@ include("includes/navigation.php");
             ?>
         </div>
         <!-- Blog Sidebar Widgets Column -->
-        
-            <?php include("includes/sidebar.php");?>
+        <?php include("includes/sidebar.php");?>
     </div>
     <!-- /.row -->
 

@@ -48,11 +48,7 @@ if (ifItIsMethod('post')) {
                 
                 ';
 
-                if($mail->send()) {
-                    $emailSent = true;
-                } else {
-                    echo 'not send';
-                }
+                $mail->send() ? $emailSent = true : false;
                 
             } else {
                 echo mysqli_error($connection);
@@ -60,16 +56,10 @@ if (ifItIsMethod('post')) {
         }
     }
 }
-
-
-
 ?>
-
-
 
 <!-- Page Content -->
 <div class="container">
-
     <div class="form-gap"></div>
     <div class="container">
         <div class="row">
@@ -77,19 +67,12 @@ if (ifItIsMethod('post')) {
                 <div class="panel panel-default">
                     <div class="panel-body forgot-card">
                         <div class="text-center">
-
                         <?php if(!isset($emailSent)): ?>
-
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
                             <h2 class="text-center">Forgot Password?</h2>
                             <p>You can reset your password here.</p>
                             <div class="panel-body">
-
-
-
-
                                 <form id="register-form" role="form" autocomplete="off" class="form" method="post">
-
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon "><i class="glyphicon glyphicon-envelope color-blue email-icon"></i></span>
@@ -99,18 +82,12 @@ if (ifItIsMethod('post')) {
                                     <div class="form-group">
                                         <input name="recover-submit" class="btn btn-lg btn-primary btn-block forgot-button" value="Reset Password" type="submit">
                                     </div>
-
                                     <input type="hidden" class="hide" name="token" id="token" value="">
                                 </form>
-
                             </div><!-- Body-->
-
                                 <?php else: ?>
-
                                 <h2>Please check your email: <?php echo $email?></h2>
-
                                 <?php endif; ?>
-
                         </div>
                     </div>
                 </div>
@@ -118,9 +95,7 @@ if (ifItIsMethod('post')) {
         </div>
     </div>
 
-
     <hr>
 
     <?php include "includes/footer.php"; ?>
-
 </div> <!-- /.container -->

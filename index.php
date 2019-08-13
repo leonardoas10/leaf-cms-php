@@ -23,23 +23,21 @@ include("includes/navigation.php");
             }
             
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin') {     
-                $post_query_count = "SELECT * FROM posts";
+                $result = query("SELECT * FROM posts");
             } else {
-                $post_query_count = "SELECT * FROM posts WHERE post_status = 'Published' ";
+                $result = query("SELECT * FROM posts WHERE post_status = 'Published' ");
             }
             
-            $find_count  = mysqli_query($connection, $post_query_count);
-            $count = mysqli_num_rows($find_count);
+            $count = mysqli_num_rows($result);
             
             if($count < 1) {
                 echo "<h1 class='text-center'>No Post Available</h1>";
             } else {
             $count = ceil($count / $per_page);
             
-            $query = "SELECT * FROM posts LIMIT  $page_1,  $per_page";
-            $select_all_posts = mysqli_query($connection, $query);
+            $result = query("SELECT * FROM posts LIMIT  $page_1,  $per_page");
                 
-            while($row = mysqli_fetch_assoc($select_all_posts)) {
+            while($row = mysqli_fetch_assoc($result)) {
                 $post_id = $row['post_id'];
                 $post_title = $row['post_title'];
                 $post_user = $row['post_user'];

@@ -2,6 +2,44 @@
 ob_start();
 include("includes/admin_header.php");
 include("./includes/delete_modal.php");
+           
+if (isset($_POST['edit'])) {
+    $the_cat_id =  escape($_POST['edit']);
+    header("Location:categories.php?edit=" . $the_cat_id);
+}
+if (isset($_POST['delete_item'])) {
+    $the_category_id =  escape($_POST['delete_item']);
+    $query = "DELETE FROM categories WHERE cat_id = {$the_category_id} ";
+    $delete_query = mysqli_query($connection, $query);
+    header('Location:categories.php');
+}
+if (isset($_POST['checkBoxArray'])) {
+    foreach ($_POST['checkBoxArray'] as $postValueId) {
+        $bulk_options = $_POST['bulk_options'];
+
+        switch ($bulk_options) {
+            case 'Clone':
+                    $query = "SELECT * FROM categories WHERE cat_id = {$postValueId} ";
+                    $select_post_query = mysqli_query($connection, $query);
+                    $row = mysqli_fetch_assoc($select_post_query);
+                    $cat_title = escape($row['cat_title']);
+
+                    $query = "INSERT INTO categories(cat_title) VALUES ('{$cat_title}') ";
+                    $clone_post_query = mysqli_query($connection, $query);
+
+                    if (!$clone_post_query) {
+                        die("Error MYSQL " . mysqli_error($connection));
+                    }
+                    break;
+            case 'Delete':
+                $delete_query = "DELETE FROM categories WHERE cat_id = {$postValueId}";
+
+                $update_to_delete_status = mysqli_query($connection, $delete_query);
+                confirmQuery($update_to_delete_status);
+                break;
+        }
+    }
+}
 ?>
 <div id="wrapper">
     <?php include("includes/admin_navigation.php") ?>
@@ -20,9 +58,8 @@ include("./includes/delete_modal.php");
                     <div class="col-xs-6">
                         <?php 
                         insert_categories(); 
-                        cloneCategories();
                         ?>
-                        <form action="" method="post">
+                        <form method="post">
                             <div class="form-group">
                                 <label for="cat_title"> Add Category </label>
                                 <input class="form-control input-background" type="=text" name="cat_title">
@@ -30,7 +67,7 @@ include("./includes/delete_modal.php");
                             <div class="form-group ">
                                 <input class="btn btn-success submit-buttons" type="submit" name="submit" value="Add Category">
                             </div>
-
+                        </form>
                             <?php
                             if (isset($_GET['edit'])) {
                                 $cat_id = $_GET['edit'];
@@ -38,21 +75,22 @@ include("./includes/delete_modal.php");
                             }
                             ?>
                     </div>
+                    <form method="post">
                     <div class="col-xs-6">
                         <table class="table table-bordered table-hover tr-background">
                             <div class="row">
                                 <div id="bulkOptionsContainer" class="col-xs-4">
                                     <select class="form-control input-background" id="" name="bulk_options">
                                         <option value="">Select Options</option>
-                                        <option value="Delete">Delete </option>
                                         <option value="Clone">Clone</option>
+                                        <option value="Delete">Delete </option>
                                     </select>
                                 </div>
                                 <div class="col-xs-4">
-                                    <input type="submit" name="submit" class="btn btn-success submit-buttons" value="Apply">
+                                    <input type="submit" class="btn btn-success submit-buttons" value="Apply">
                                 </div>
                                 <thead>
-                                    <th><input id="selectAllBoxes" type="checkbox" class="checkbox-color"></th>
+                                    <th><input id="selectAllBoxes" type="checkbox"></th>
                                     <th>ID</th>
                                     <th>Category Title</th>
                                     <th>Edit</th>
@@ -72,32 +110,17 @@ include("./includes/delete_modal.php");
                                         echo "<td>{$cat_id}</td>";
                                         echo "<td>{$cat_title}</td>";
                                         ?>
-                                        <form method="post">
-                                            <?php
-                                            echo "<td><input rel='$cat_id' class='btn-xs btn-success submit-buttons' type='submit' name='edit' value='Edit'></td>";
-                                            echo "<td><input rel='$cat_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
-                                            ?>
-                                        </form>
-                                        <?php
-                                        echo "</tr>";
-                                    }
-
-                                    ?>
-                                    <?php 
-                                   
-                                    if (isset($_POST['edit'])) {
-                                        header("Location:categories.php?edit=" . $cat_id);
-                                    }
-                                    if (isset($_POST['delete_item'])) {
-                                        $the_category_id =  escape($_POST['delete_item']);
-                                        $query = "DELETE FROM categories WHERE cat_id = {$the_category_id} ";
-                                        $delete_query = mysqli_query($connection, $query);
-                                        header('Location:categories.php');
-                                    }
-                                    ?>
-                                </tbody>
-                        </table>
                         </form>
+                        <form method="post" id="actions">
+                                        <?php
+                                        echo "<input type='hidden' class='_id' name='edit' value=''>";
+                                        echo "<td><input rel='$cat_id' class='btn-xs btn-success submit-buttons edit_link' type='submit' value='Edit'></td>";
+                                        echo "<td><input rel='$cat_id' class='btn-xs btn-danger del_link' type='submit' name='delete' value='Delete'></td>";
+                                        ?>
+                        </form>
+                        <?php echo "</tr>";} ?>
+                        </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

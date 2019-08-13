@@ -9,12 +9,7 @@ if (isset($_POST{'create_user'})) {
     $user_password = escape($_POST['user_password']);
     $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10));
 
-    //        move_uploaded_file($post_image_temp, "../images/$post_image");
-
-    $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) VALUES('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_email}', '{$user_password}') ";
-
-    $create_user = mysqli_query($connection, $query);
-    confirmQuery($create_user);
+    query("INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, user_password) VALUES('{$user_firstname}', '{$user_lastname}', '{$user_role}', '{$username}', '{$user_email}', '{$user_password}') ");
 
     header("Location: users.php?createduser={$username}");
 }

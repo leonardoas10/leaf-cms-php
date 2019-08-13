@@ -1,24 +1,23 @@
 <?php 
 ob_start();
 if (isset($_POST{'create_post'})) {
-    $post_title = ucwords($_POST['post_title']);
-    $post_user = ucwords($_POST['post_user']);
-    $post_category_id = $_POST['post_category_id'];
+    $post_title = escape(ucwords($_POST['post_title']));
+    $post_user = escape(ucwords($_POST['post_user']));
+    $user_id = $_SESSION['user_id'];
+    $post_category_id = escape($_POST['post_category_id']);
     $post_status = $_POST['post_status'];
     $post_image = $_FILES['post_image']['name'];
     $post_image_temp = $_FILES['post_image']['tmp_name'];
-    $post_tags = ucwords($_POST['post_tags']);
-    $post_content = $_POST['post_content'];
+    $post_tags = escape(ucwords($_POST['post_tags']));
+    $post_content = escape($_POST['post_content']);
     $post_date = date('d-m-y');
     $post_comment_count = 0;
     $post_views_count = 0;
 
     move_uploaded_file($post_image_temp, "../images/$post_image");
 
-    $query = "INSERT INTO posts(post_title, post_category_id, post_user, post_date, post_image, post_content, post_tags, post_comment_count, post_status, post_views_count) VALUES ('{$post_title}','{$post_category_id}','{$post_user}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}', '{$post_views_count}') ";
+    query("INSERT INTO posts(user_id, post_title, post_category_id, post_user, post_date, post_image, post_content, post_tags, post_comment_count, post_status, post_views_count) VALUES ('{$user_id}','{$post_title}','{$post_category_id}','{$post_user}',now(),'{$post_image}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}', '{$post_views_count}') ");
 
-    $create_post_query = mysqli_query($connection, $query);
-    confirmQuery($create_post_query);
     $last_id_query = mysqli_insert_id($connection);
 
     header("Location: posts.php?created&p_id={$last_id_query}");

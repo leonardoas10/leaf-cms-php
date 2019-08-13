@@ -1,8 +1,12 @@
 <?php 
 include("includes/admin_header.php");
-// require 'vendor/autoload.php'; 
-// $dotenv = Dotenv\Dotenv::create(__DIR__);
-// $dotenv->load();
+
+$posts_count = count_records(get_all_user_posts());
+$comments_count = count_records(get_all_user_comments());
+$categories_count = count_records(get_all_user_categories());
+$post_published_count = selectFromColumnStatus('posts', 'post_status', 'Published');
+$post_draft_count = selectFromColumnStatus('posts', 'post_status', 'Draft');
+$unapproved_comments_count = selectFromColumnStatus('comments', 'comment_status', 'Unapproved');
 ?>
 <div id="wrapper">
     <?php include("includes/admin_navigation.php") ?>
@@ -22,7 +26,7 @@ include("includes/admin_header.php");
 
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -30,8 +34,7 @@ include("includes/admin_header.php");
                                     <i class="fa fa-file-text fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-
-                                    <div class='huge'><?php echo $posts_count = selectFromCount('posts'); ?></div>
+                                    <?php echo "<div class='huge'>".$posts_count."</div>" ?>
                                     <div>Posts</div>
                                 </div>
                             </div>
@@ -45,7 +48,7 @@ include("includes/admin_header.php");
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
@@ -53,8 +56,7 @@ include("includes/admin_header.php");
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'><?php echo $comments_count = selectFromCount('comments'); ?></div>
-
+                                    <?php echo "<div class='huge'>".$comments_count."</div>" ?>
                                     <div>Comments</div>
                                 </div>
                             </div>
@@ -68,30 +70,7 @@ include("includes/admin_header.php");
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-user fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-
-                                    <div class='huge'><?php echo $users_count = selectFromCount('users'); ?></div>
-                                    <div> Users</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="users.php">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
@@ -99,7 +78,7 @@ include("includes/admin_header.php");
                                     <i class="fa fa-list fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class='huge'><?php echo $categories_count = selectFromCount('categories'); ?></div>
+                                    <?php echo "<div class='huge'>".$categories_count."</div>" ?>
                                     <div>Categories</div>
                                 </div>
                             </div>
@@ -115,12 +94,6 @@ include("includes/admin_header.php");
                 </div>
             </div>
             <!-- /.row -->
-            <?php
-            $post_published_count = selectFromColumnStatus('posts', 'post_status', 'Published');
-            $post_draft_count = selectFromColumnStatus('posts', 'post_status', 'Draft');
-            $unapproved_comments_count = selectFromColumnStatus('comments', 'comment_status', 'Unapproved');
-            $subscriber_count = selectFromRoleStatus('users', 'user_role', 'Subscriber');
-            ?>
             <div class="row">
                 <script type="text/javascript">
                     google.charts.load('current', {
@@ -134,11 +107,11 @@ include("includes/admin_header.php");
 
                             <?php
 
-                            $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pendind Commments', 'Users', 'Subscribers', 'Categories'];
-                            $element_count = [$posts_count, $post_published_count, $post_draft_count, $comments_count, $unapproved_comments_count, $users_count, $subscriber_count, $categories_count];
+                            $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pendind Commments', 'Categories'];
+                            $element_count = [$posts_count, $post_published_count, $post_draft_count, $comments_count, $unapproved_comments_count, $categories_count];
                             $color = ['color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray', 'color: gray',];
 
-                            for ($i = 0; $i < 8; $i++) {
+                            for ($i = 0; $i < 6; $i++) {
                                 echo "['{$element_text[$i]}'" . " ," . "{$element_count[$i]}" . " ," . "'{$color[$i]}' ],";
                             }
                             ?>
