@@ -8,7 +8,7 @@ if (isset($_POST['checkBoxArray'])) {
 
         switch ($bulk_options) {
             case 'Approved':
-                qyery("UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}");
+                query("UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}");
                 break;
             case 'Unapproved':
                 query("UPDATE comments SET comment_status = '{$bulk_options}' WHERE comment_id = {$postValueId}");
@@ -71,8 +71,10 @@ if (isset($_POST['delete_item'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $result = query('SELECT * FROM comments');
-                    while ($row = mysqli_fetch_assoc($result)) {
+                     
+            $query_comments = query("SELECT * FROM comments");
+
+                    while ($row = mysqli_fetch_assoc($query_comments)) {
                         $comment_id = $row['comment_id'];
                         $comment_post_id = stripcslashes($row['comment_post_id']);
                         $comment_author = stripcslashes($row['comment_author']);

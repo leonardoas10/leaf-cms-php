@@ -10,7 +10,6 @@
     transform: scale(1.2);
 }
 /*TITLE*/
-
 .post-title {
     color: black !important;
     text-decoration: none !important;
@@ -29,9 +28,14 @@
     color: RGB(54, 181, 75) !important;
     font-size: 30px !important;
 }
-.time-icon, .email-icon, .user-icon, .wallet-icon, .check-icon {
+.time-icon, .email-icon, .user-icon, .wallet-icon, .check-icon, .like-icon {
     color: RGB(54, 181, 75) !important;
 }
+.like-icon {
+    font-size: 20px !important;
+    text-decoration: none !important;
+}
+
 /*INPUTS BACKGROUND*/
 .input-background:focus {
     box-shadow: none !important;
@@ -163,7 +167,7 @@
     border-color: RGB(54, 181, 75) !important; 
 }
     
-/*Sidebar - Widget - Search Engine*/
+/*SIDEBAR - WIDGET - SEARCH ENGINE*/
 .well {
     transition: 0.5s;
     border: 0.5px solid RGB(54, 181, 75) !important; 
@@ -220,6 +224,7 @@
     opacity: 1 !important;
     transform: scale(1.1);
 }
+
 
 
 

@@ -47,7 +47,7 @@
                     <li><a href="posts.php?source=add_posts">Add Posts</a></li>
                 </ul>
             </li>
-            <li><a href="/leaf-cms-php/admin/categories/"><i class="fa fa-fw fa-wrench"></i> Categories</a></li>
+            <li><a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a></li>
             <li class=""><a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a></li>
             <?php if(is_admin()): ?>
             <li>

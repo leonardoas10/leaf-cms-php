@@ -43,10 +43,6 @@ if (isset($_POST['unliked'])) {
                 $the_post_id = $_GET['p_id'];
                 $result = query("UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $the_post_id");
 
-                if (!$view_connection) {
-                    die("Query Fail " . mysqli_error($connection));
-                }
-
                 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin') {
                     $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
                 } else {
@@ -81,8 +77,8 @@ if (isset($_POST['unliked'])) {
                         <?php if (isLoggedIn()) {  ?>
                             <div class="row">
                                 <p class="pull-right">
-                                    <a class="<?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like'; ?>" href="">
-                                    <span class="<?php echo userLikedThisPost($the_post_id) ? 'glyphicon glyphicon-thumbs-down' : 'glyphicon glyphicon-thumbs-up'; ?>"
+                                    <a class=" like-icon <?php echo userLikedThisPost($the_post_id) ? 'unlike' : 'like'; ?>" href="">
+                                    <span class="like-icon <?php echo userLikedThisPost($the_post_id) ? 'glyphicon glyphicon-thumbs-down' : 'glyphicon glyphicon-thumbs-up'; ?>"
                                     data-toggle="tooltip"
                                     data-placement="top"
                                     title="<?php echo userLikedThisPost($the_post_id) ? ' I liked this before' : ' Want to like it?'; ?>"
@@ -96,7 +92,7 @@ if (isset($_POST['unliked'])) {
                         <?php } ?>
 
                         <div class="row">
-                            <p class="pull-right">Like: <?php getPostLikes($the_post_id); ?></p>
+                            <p class="pull-right like-icon">Likes: <?php getPostLikes($the_post_id); ?></p>
                         </div>
                         <div class="clearfix"></div>
 

@@ -3,12 +3,12 @@ ob_start();
 include("../includes/db.php");
 include("functions.php");
 session_start(); 
-// || ($_SESSION['user_role'] !== 'Admin')
+
 if (!isset($_SESSION['user_role'])) {
     header("Location: /leaf-cms-php/");
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

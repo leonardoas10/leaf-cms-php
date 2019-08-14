@@ -42,7 +42,7 @@
             <ul class="nav navbar-nav navbar-right">
             <?php if(isLoggedIn()): ?>
                 <li><a class="navbar-subtitles" href='/leaf-cms-php/admin'>Admin</a></li>
-                <li><a class="navbar-subtitles" href='/leaf-cms-php/includes/logout'>Log Out</a></li>
+                <li><a class="navbar-subtitles" href='/leaf-cms-php/includes/logout.php'>Log Out</a></li>
             <?php else:?> 
                 <li><a class="navbar-subtitles" href='/leaf-cms-php/login '>Login</a></li>
             <?php endif;?>   

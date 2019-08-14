@@ -10,14 +10,13 @@ if (isset($_GET['updated'])) {
     $post_status = $row['post_status'];
 
     if ($post_status == 'Published') {
-        echo "<p class=' bg-success center'>Post Updated: " . " " . "<a href='../post.php?p_id={$the_post_id}' class='btn btn-success '>View Post</a></p>" . "<br>" . "<hr>";
+        echo "<p class=' bg-success center'>Post Updated: " . " " . "<a href='/leaf-cms-php/post/{$the_post_id}' class='btn btn-success '>View Post</a></p>" . "<br>" . "<hr>";
     }
 }
 
 if (isset($_GET['created'])) {
     $the_post_id = $_GET['p_id'];
-    
-    echo "<p class=' bg-success center'>Post Created: " . " " . "<a href='../post.php?p_id={$the_post_id}' class='btn btn-success '>View Post</a></p>" . "<br>" . "<hr>";
+    echo "<p class=' bg-success center'>Post Created: " . " " . "<a href='/leaf-cms-php/post/{$the_post_id}' class='btn btn-success '>View Post</a></p>" . "<br>" . "<hr>";
 }
 
 if (isset($_POST['checkBoxArray'])) {
@@ -116,7 +115,11 @@ if (isset($_POST['delete_item'])) {
             <tbody>
                 <?php
                 $user = $_SESSION['username'];
-                $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id WHERE post_user = '$user'";
+                if($user === 'leonardo') {
+                    $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id";
+                } else {
+                    $query = "SELECT posts.post_id, posts.post_user, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_views_count, posts.post_date, categories.cat_id, categories.cat_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id WHERE post_user = '$user'";
+                }
                 $select_posts = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_posts)) {
